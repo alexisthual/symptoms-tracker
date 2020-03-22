@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 import {
@@ -42,6 +42,43 @@ const MainPage = ({ language }: any) => {
   const [breathing, updateBreathing] = useState();
   const [breathingSince, updateBreathingSince] = useState();
   const [breathingOk, updateBreathingOk] = useState(false);
+
+  const onSubmit = useCallback(
+    event => {
+      event.preventDefault();
+      const payload = {
+        age,
+        zipcode,
+        headache,
+        headacheSince,
+        fever,
+        feverSince,
+        breathing,
+        breathingSince
+      };
+
+      fetch("api/reply", {
+        method: "POST",
+        body: JSON.stringify(payload),
+        headers: { "Content-Type": "application/json" }
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log("data", data);
+        })
+        .finally(() => {});
+    },
+    [
+      age,
+      zipcode,
+      headache,
+      headacheSince,
+      fever,
+      feverSince,
+      breathing,
+      breathingSince
+    ]
+  );
 
   useEffect(() => {
     updateHeadacheOk(
@@ -94,7 +131,7 @@ const MainPage = ({ language }: any) => {
           <FormattedMessage id="description" />
         </p>
 
-        <form>
+        <form onSubmit={onSubmit}>
           <div className="timeline">
             <div className="timeline-item">
               {formIcon(age !== "")}
