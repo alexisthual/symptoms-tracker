@@ -1,9 +1,9 @@
 {
   "env": {
-    "DB_HOST": "@db-host",
-    "DB_PORT": "@db-port",
-    "DB_NAME": "@db-name",
-    "DB_USER": "@db-user",
-    "DB_PWD": "@db-pwd"
+    "POSTGRES_HOST": "@db-host",
+    "POSTGRES_PORT": "@db-port",
+    "POSTGRES_DB": "@db-name",
+    "POSTGRES_USER": "@db-user",
+    "POSTGRES_PASSWORD": "@db-pwd"
   }
 }
