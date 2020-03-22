@@ -1,6 +1,6 @@
 {
   "title": "Symptoms Tracker",
-  "description": "Questionnaire visant le suivi du développent du COVID-19 au sein des populations confinées. Aucune donnée personnelle ou identifiante n’est collectée.",
+  "disclaimer": "Ce site est une initiative personnelle et ne livre pas de d'avis médical. Ce questionnaire vise le suivi du développement des cas réel du COVID-19 au sein des populations confinées. Aucune donnée personnelle ou identifiante n'est collectée.",
   "modal.title": "Merci pour votre participation !",
   "modal.content": "Vous pouvez maintenant aider les personnes confinées avec vous à renseigner leur état de santé et remplir à nouveau ce questionnaire demain pour permettre de suivre la pandémie.",
   "modal.retake": "Refaire le questionnaire",
@@ -26,5 +26,7 @@
   "breathing.MILD": "Oui, un peu",
   "breathing.NO": "Non",
   "send": "Envoyer",
-  "about": "À Propos"
+  "sent": "Envoyé !",
+  "about": "À Propos",
+  "home": "Accueil"
 }

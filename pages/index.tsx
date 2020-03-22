@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useState, useEffect } from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
@@ -7,6 +8,7 @@ import {
   feverStates,
   breathingStates
 } from "../lib/types";
+import Header from "../components/header";
 
 import "spectre.css/dist/spectre.min.css";
 import "spectre.css/dist/spectre-exp.min.css";
@@ -43,6 +45,7 @@ const MainPage = ({ language }: any) => {
   const [breathingSince, updateBreathingSince] = useState();
   const [breathingOk, updateBreathingOk] = useState(false);
   const [modalActive, updateModalActive] = useState(false);
+  const [alreadySent, updateAlreadySent] = useState(false);
 
   useEffect(() => {
     updateHeadacheOk(
@@ -65,6 +68,8 @@ const MainPage = ({ language }: any) => {
 
     if (!(!age || !zipcode || !headacheOk || !feverOk || !breathingOk)) {
       updateModalActive(true);
+      updateAlreadySent(true);
+
       await fetch("/api/submission", {
         method: "POST",
         body: JSON.stringify({
@@ -99,6 +104,21 @@ const MainPage = ({ language }: any) => {
     </div>
   );
 
+  const submitButton = () =>
+    alreadySent ? (
+      <button className="btn btn-primary bg-success" disabled>
+        <i className="icon icon-check"></i> <FormattedMessage id="sent" />
+      </button>
+    ) : (
+      <button
+        type="submit"
+        className="btn btn-primary"
+        disabled={!age || !zipcode || !headacheOk || !feverOk || !breathingOk}
+      >
+        <FormattedMessage id="send" />
+      </button>
+    );
+
   return (
     <>
       <div className={`modal ${modalActive ? "active" : ""}`} id="modal-id">
@@ -118,12 +138,17 @@ const MainPage = ({ language }: any) => {
             </div>
           </div>
           <div className="modal-body">
-            <div className="content">
+            <div className="content text-justify">
               <FormattedMessage id="modal.content" />
             </div>
           </div>
           <div className="modal-footer inline-flex">
-            <button className="btn btn-primary">
+            <button
+              className="btn btn-primary"
+              onClick={() => {
+                location.reload();
+              }}
+            >
               <i className="icon icon-refresh"></i>{" "}
               <FormattedMessage id="modal.retake" />
             </button>
@@ -135,25 +160,9 @@ const MainPage = ({ language }: any) => {
         </div>
       </div>
 
-      <header className="navbar">
-        <section className="navbar-section"></section>
-        <section className="navbar-center">
-          <h3 className="navbar-brand">
-            <FormattedMessage id="title" />
-          </h3>
-        </section>
-        <section className="navbar-section px-2">
-          <a href="#" className="btn btn-link">
-            <i className="icon icon-location"></i> {language}
-          </a>
-        </section>
-      </header>
+      <Header language={language} />
 
       <div className="container grid-xs">
-        <p className="text-center">
-          <FormattedMessage id="description" />
-        </p>
-
         <form onSubmit={sendSubmission}>
           <div className="timeline">
             <div className="timeline-item">
@@ -345,24 +354,18 @@ const MainPage = ({ language }: any) => {
             </div>
           </div>
 
-          <div style={{ marginTop: 40 }}>
-            <button
-              type="submit"
-              className="btn btn-primary"
-              disabled={
-                !age || !zipcode || !headacheOk || !feverOk || !breathingOk
-              }
-            >
-              <FormattedMessage id="send" />
-            </button>
-          </div>
+          <div style={{ marginTop: 40 }}>{submitButton()}</div>
         </form>
 
         <div className="footer inline-flex">
-          <button className="btn btn-link">
-            <FormattedMessage id="about" />
-          </button>
-          <button className="btn btn-link">Github</button>
+          <Link href="/about">
+            <button className="btn btn-link">
+              <FormattedMessage id="about" />
+            </button>
+          </Link>
+          <a href="https://github.com/alexisthual/symptoms-tracker">
+            <button className="btn btn-link">Github</button>
+          </a>
         </div>
       </div>
     </>
