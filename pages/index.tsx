@@ -97,10 +97,11 @@ const MainPage = ({ language }: any) => {
                       <option value="" disabled>
                         Choisir
                       </option>
-                      <option value="0">0-20 ans</option>
-                      <option value="1">20-40 ans</option>
-                      <option value="2">40-60 ans</option>
-                      <option value="3">60+ ans</option>
+                      <option value="0">Moins de 15 ans</option>
+                      <option value="1">15-44 ans</option>
+                      <option value="2">45-64 ans</option>
+                      <option value="3">65-74 ans</option>
+                      <option value="4">75 ans et plus</option>
                     </select>
                   </div>
                 </div>
