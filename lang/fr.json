@@ -1,0 +1,21 @@
+{
+  "title": "Symptoms Tracker",
+  "description": "Questionnaire visant le suivi du développent du COVID-19 au sein des populations confinées. Aucune donnée personnelle ou identifiante n’est collectée.",
+  "age": "Âge",
+  "zipcode": "Code Postal",
+  "pick": "Choisir",
+  "howmanydays": "Depuis combien de jours ?",
+  "headache.question": "Ressentez-vous des maux de tête, des douleurs musculaires ou de la fatigue ?",
+  "headache.YES": "Oui",
+  "headache.NO": "Non",
+  "fever.question": "Avez-vous de la fièvre ?",
+  "fever.HIGH": "Oui, beaucoup",
+  "fever.MILD": "Oui, un peu",
+  "fever.NO": "Non",
+  "breathing.question": "Avez-vous des difficultés à respirer ?",
+  "breathing.HIGH": "Oui, beaucoup",
+  "breathing.MILD": "Oui, un peu",
+  "breathing.NO": "Non",
+  "send": "Envoyer",
+  "about": "À Propos"
+}

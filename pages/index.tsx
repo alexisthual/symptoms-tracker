@@ -1,11 +1,20 @@
 import { useState, useEffect } from "react";
+import { defineMessages, FormattedMessage, useIntl } from "react-intl";
+
+import { headacheStates, feverStates, breathingStates } from "../lib/types";
 
 import "spectre.css/dist/spectre.min.css";
 import "spectre.css/dist/spectre-exp.min.css";
 import "spectre.css/dist/spectre-icons.min.css";
 import "../style.scss";
 
+const messages = defineMessages({
+  pick: { id: "pick" }
+});
+
 const MainPage = ({ language }: any) => {
+  const intl = useIntl();
+
   const [age, updateAge] = useState("");
   const [zipcode, updateZipcode] = useState();
   const [headache, updateHeadache] = useState();
@@ -20,34 +29,24 @@ const MainPage = ({ language }: any) => {
 
   useEffect(() => {
     updateHeadacheOk(
-      headacheSince !== undefined ||
-        headache === headacheStates[headacheStates.length - 1]
+      headacheSince !== undefined || headache === headacheStates.NO
     );
   }, [headache, headacheSince]);
 
   useEffect(() => {
-    updateFeverOk(
-      feverSince !== undefined || fever === feverStates[feverStates.length - 1]
-    );
+    updateFeverOk(feverSince !== undefined || fever === feverStates.NO);
   }, [fever, feverSince]);
 
   useEffect(() => {
     updateBreathingOk(
-      breathingSince !== undefined ||
-        breathing === breathingStates[breathingStates.length - 1]
+      breathingSince !== undefined || breathing === breathingStates.NO
     );
   }, [breathing, breathingSince]);
-
-  const headacheStates = ["Oui", "Non"];
-
-  const feverStates = ["Oui, beaucoup", "Oui, un peu", "Non"];
-
-  const breathingStates = ["Oui, beaucoup", "Oui, un peu", "Non"];
 
   const formIcon = (condition: any) => (
     <div className="timeline-left">
       {condition ? (
-        <div className="timeline-icon icon-lg">
+        <div className="timeline-icon icon-lg bg-success">
           <i className="icon icon-check"></i>
         </div>
       ) : (
@@ -63,7 +62,9 @@ const MainPage = ({ language }: any) => {
       <header className="navbar">
         <section className="navbar-section"></section>
         <section className="navbar-center">
-          <h3 className="navbar-brand">Symptoms Tracker</h3>
+          <h3 className="navbar-brand">
+            <FormattedMessage id="title" />
+          </h3>
         </section>
         <section className="navbar-section px-2">
           <a href="#" className="btn btn-link">
@@ -74,9 +75,7 @@ const MainPage = ({ language }: any) => {
 
       <div className="container grid-xs">
         <p className="text-center">
-          Questionnaire visant le suivi du développent du COVID-19 au sein des
-          populations confinées. Aucune donnée personnelle ou identifiante n’est
-          collectée.
+          <FormattedMessage id="description" />
         </p>
 
         <form>
@@ -85,7 +84,9 @@ const MainPage = ({ language }: any) => {
               {formIcon(age !== "")}
               <div className="timeline-content">
                 <div className="form-group">
-                  <label className="form-label">Âge</label>
+                  <label className="form-label">
+                    <FormattedMessage id="age" />
+                  </label>
                   <div className="form-group">
                     <select
                       className="form-select"
@@ -95,7 +96,7 @@ const MainPage = ({ language }: any) => {
                       }}
                     >
                       <option value="" disabled>
-                        Choisir
+                        {intl.formatMessage(messages.pick)}
                       </option>
                       <option value="0">0-20 ans</option>
                       <option value="1">20-40 ans</option>
@@ -111,11 +112,13 @@ const MainPage = ({ language }: any) => {
               {formIcon(zipcode !== undefined)}
               <div className="timeline-content">
                 <div className="form-group">
-                  <label className="form-label">Code Postal</label>
+                  <label className="form-label">
+                    <FormattedMessage id="zipcode" />
+                  </label>
                   <input
                     type="number"
                     className="form-input"
-                    placeholder="Choisir"
+                    placeholder={intl.formatMessage(messages.pick)}
                     value={zipcode}
                     onChange={(event: any) => {
                       updateZipcode(event.target.value);
@@ -130,29 +133,30 @@ const MainPage = ({ language }: any) => {
               <div className="timeline-content">
                 <div className="form-group">
                   <label className="form-label">
-                    Ressentez-vous des maux de tête, des douleurs musculaires ou
-                    de la fatigue ?
+                    <FormattedMessage id="headache.question" />
                   </label>
-                  {headacheStates.map((state: string, index: number) => (
-                    <label key={index} className="form-radio">
-                      <input
-                        type="radio"
-                        value={state}
-                        checked={headache === state}
-                        onChange={(event: any) => {
-                          updateHeadache(event.target.value);
-                        }}
-                      />
-                      <i className="form-icon"></i> {state}
-                    </label>
-                  ))}
+                  {Object.keys(headacheStates).map(
+                    (state: string, index: number) => (
+                      <label key={index} className="form-radio">
+                        <input
+                          type="radio"
+                          value={state}
+                          checked={headache === state}
+                          onChange={(event: any) => {
+                            updateHeadache(event.target.value);
+                          }}
+                        />
+                        <i className="form-icon"></i>{" "}
+                        <FormattedMessage id={`headache.${state}`} />
+                      </label>
+                    )
+                  )}
                 </div>
 
-                {headache &&
-                headache !== headacheStates[headacheStates.length - 1] ? (
+                {headache && headache !== headacheStates.NO ? (
                   <div className="form-group">
                     <label className="form-label">
-                      Depuis combien de jours ?
+                      <FormattedMessage id="howmanydays" />
                     </label>
                     <input
                       type="number"
@@ -172,26 +176,31 @@ const MainPage = ({ language }: any) => {
               {formIcon(feverOk)}
               <div className="timeline-content">
                 <div className="form-group">
-                  <label className="form-label">Avez-vous de la fièvre ?</label>
-                  {feverStates.map((state: string, index: number) => (
-                    <label key={index} className="form-radio">
-                      <input
-                        type="radio"
-                        value={state}
-                        checked={fever === state}
-                        onChange={(event: any) => {
-                          updateFever(event.target.value);
-                        }}
-                      />
-                      <i className="form-icon"></i> {state}
-                    </label>
-                  ))}
+                  <label className="form-label">
+                    <FormattedMessage id="fever.question" />
+                  </label>
+                  {Object.keys(feverStates).map(
+                    (state: string, index: number) => (
+                      <label key={index} className="form-radio">
+                        <input
+                          type="radio"
+                          value={state}
+                          checked={fever === state}
+                          onChange={(event: any) => {
+                            updateFever(event.target.value);
+                          }}
+                        />
+                        <i className="form-icon"></i>{" "}
+                        <FormattedMessage id={`fever.${state}`} />
+                      </label>
+                    )
+                  )}
                 </div>
 
-                {fever && fever !== feverStates[feverStates.length - 1] ? (
+                {fever && fever !== feverStates.NO ? (
                   <div className="form-group">
                     <label className="form-label">
-                      Depuis combien de jours ?
+                      <FormattedMessage id="howmanydays" />
                     </label>
                     <input
                       type="number"
@@ -212,28 +221,30 @@ const MainPage = ({ language }: any) => {
               <div className="timeline-content">
                 <div className="form-group">
                   <label className="form-label">
-                    Avez-vous des difficultés à respirer ?
+                    <FormattedMessage id="breathing.question" />
                   </label>
-                  {breathingStates.map((state: string, index: number) => (
-                    <label key={index} className="form-radio">
-                      <input
-                        type="radio"
-                        value={state}
-                        checked={breathing === state}
-                        onChange={(event: any) => {
-                          updateBreathing(event.target.value);
-                        }}
-                      />
-                      <i className="form-icon"></i> {state}
-                    </label>
-                  ))}
+                  {Object.keys(breathingStates).map(
+                    (state: string, index: number) => (
+                      <label key={index} className="form-radio">
+                        <input
+                          type="radio"
+                          value={state}
+                          checked={breathing === state}
+                          onChange={(event: any) => {
+                            updateBreathing(event.target.value);
+                          }}
+                        />
+                        <i className="form-icon"></i>{" "}
+                        <FormattedMessage id={`breathing.${state}`} />
+                      </label>
+                    )
+                  )}
                 </div>
 
-                {breathing &&
-                breathing !== breathingStates[breathingStates.length - 1] ? (
+                {breathing && breathing !== breathingStates.NO ? (
                   <div className="form-group">
                     <label className="form-label">
-                      Depuis combien de jours ?
+                      <FormattedMessage id="howmanydays" />
                     </label>
                     <input
                       type="number"
@@ -257,13 +268,15 @@ const MainPage = ({ language }: any) => {
                 !age || !zipcode || !headacheOk || !feverOk || !breathingOk
               }
             >
-              Envoyer
+              <FormattedMessage id="send" />
             </button>
           </div>
         </form>
 
         <div className="footer">
-          <button className="btn btn-link">À Propos</button>
+          <button className="btn btn-link">
+            <FormattedMessage id="about" />
+          </button>
           <button className="btn btn-link">Github</button>
         </div>
       </div>

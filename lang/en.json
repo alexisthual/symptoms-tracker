@@ -1,0 +1,21 @@
+{
+  "title": "Symptoms Tracker",
+  "description": "English disclaimer",
+  "age": "Age",
+  "zipcode": "Zip Code",
+  "pick": "Pick",
+  "howmanydays": "For how many days?",
+  "headache.question": "Do you have a headache, show muscular ache or feel tired?",
+  "headache.YES": "Yes",
+  "headache.NO": "No",
+  "fever.question": "Do you have a fever?",
+  "fever.HIGH": "Yes, a lot",
+  "fever.MILD": "Yes, a little",
+  "fever.NO": "No",
+  "breathing.question": "Do you have trouble breathing?",
+  "breathing.HIGH": "Yes, a lot",
+  "breathing.MILD": "Yes, a little",
+  "breathing.NO": "No",
+  "send": "Send",
+  "about": "About"
+}
