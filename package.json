@@ -19,6 +19,7 @@
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-intl": "^4.2.2",
+    "sequelize": "^5.21.5",
     "serverless-pg": "^0.1.1",
     "spectre.css": "^0.5.8",
     "sql-template-strings": "^2.2.2",
