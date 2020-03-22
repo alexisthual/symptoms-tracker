@@ -1,10 +1,8 @@
-import { connect } from "../db";
-import { Submission } from "../db/entities/submission";
+import { connect } from "../lib/db";
+import { Submission } from "../lib/db/entities/submission";
 
 module.exports = async (req: any, res: any) => {
   if (req.method === "POST") {
-    console.log(req.body);
-
     const connection = await connect();
 
     const submissionRepository = connection.getRepository(Submission);
