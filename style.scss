@@ -18,8 +18,15 @@ $primary-color: #2965cc;
 
 .footer {
   margin: 20px 0;
+  justify-content: center;
+}
+
+.inline-flex {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: center;
+
+  & > *:not(:last-child) {
+    margin-right: 4px;
+  }
 }

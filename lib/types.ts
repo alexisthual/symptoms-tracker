@@ -5,6 +5,7 @@ export enum ageCategories {
   AGING = "3", // 65-74
   ELDERLY = "4" // 75+
 }
+
 export enum headacheStates {
   YES = "YES",
   NO = "NO"

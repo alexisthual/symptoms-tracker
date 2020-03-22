@@ -42,6 +42,7 @@ const MainPage = ({ language }: any) => {
   const [breathing, updateBreathing] = useState();
   const [breathingSince, updateBreathingSince] = useState();
   const [breathingOk, updateBreathingOk] = useState(false);
+  const [modalActive, updateModalActive] = useState(false);
 
   useEffect(() => {
     updateHeadacheOk(
@@ -59,6 +60,31 @@ const MainPage = ({ language }: any) => {
     );
   }, [breathing, breathingSince]);
 
+  const sendSubmission = async (event: any) => {
+    event.preventDefault();
+
+    if (!(!age || !zipcode || !headacheOk || !feverOk || !breathingOk)) {
+      updateModalActive(true);
+      await fetch("/api/submission", {
+        method: "POST",
+        body: JSON.stringify({
+          age,
+          zipcode,
+          submittedAt: new Date(Date.now()),
+          headache,
+          headacheSince,
+          fever,
+          feverSince,
+          breathing,
+          breathingSince
+        }),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+    }
+  };
+
   const formIcon = (condition: any) => (
     <div className="timeline-left">
       {condition ? (
@@ -75,6 +101,40 @@ const MainPage = ({ language }: any) => {
 
   return (
     <>
+      <div className={`modal ${modalActive ? "active" : ""}`} id="modal-id">
+        <a className="modal-overlay" aria-label="Close"></a>
+        <div className="modal-container">
+          <div className="modal-header">
+            <a
+              className="btn btn-clear float-right"
+              aria-label="Close"
+              onClick={() => {
+                updateModalActive(false);
+              }}
+            ></a>
+            <div className="modal-title h5">
+              <i className="icon icon-upload"></i>{" "}
+              <FormattedMessage id="modal.title" />
+            </div>
+          </div>
+          <div className="modal-body">
+            <div className="content">
+              <FormattedMessage id="modal.content" />
+            </div>
+          </div>
+          <div className="modal-footer inline-flex">
+            <button className="btn btn-primary">
+              <i className="icon icon-refresh"></i>{" "}
+              <FormattedMessage id="modal.retake" />
+            </button>
+            <button className="btn disabled">
+              <i className="icon icon-search"></i>{" "}
+              <FormattedMessage id="modal.visualise" />
+            </button>
+          </div>
+        </div>
+      </div>
+
       <header className="navbar">
         <section className="navbar-section"></section>
         <section className="navbar-center">
@@ -94,7 +154,7 @@ const MainPage = ({ language }: any) => {
           <FormattedMessage id="description" />
         </p>
 
-        <form>
+        <form onSubmit={sendSubmission}>
           <div className="timeline">
             <div className="timeline-item">
               {formIcon(age !== "")}
@@ -287,6 +347,7 @@ const MainPage = ({ language }: any) => {
 
           <div style={{ marginTop: 40 }}>
             <button
+              type="submit"
               className="btn btn-primary"
               disabled={
                 !age || !zipcode || !headacheOk || !feverOk || !breathingOk
@@ -297,7 +358,7 @@ const MainPage = ({ language }: any) => {
           </div>
         </form>
 
-        <div className="footer">
+        <div className="footer inline-flex">
           <button className="btn btn-link">
             <FormattedMessage id="about" />
           </button>

@@ -1,6 +1,10 @@
 {
   "title": "Symptoms Tracker",
   "description": "Questionnaire visant le suivi du développent du COVID-19 au sein des populations confinées. Aucune donnée personnelle ou identifiante n’est collectée.",
+  "modal.title": "Merci pour votre participation !",
+  "modal.content": "Vous pouvez maintenant aider les personnes confinées avec vous à renseigner leur état de santé et remplir à nouveau ce questionnaire demain pour permettre de suivre la pandémie.",
+  "modal.retake": "Refaire le questionnaire",
+  "modal.visualise": "Voir les résultats (bientôt)",
   "age": "Âge",
   "age.CHILD": "0-14 ans",
   "age.ADULT": "15-44 ans",

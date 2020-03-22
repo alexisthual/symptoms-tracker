@@ -1,6 +1,10 @@
 {
   "title": "Symptoms Tracker",
   "description": "English disclaimer",
+  "modal.title": "Thank you for your cooperation!",
+  "modal.content": "You can now help people confined with you answer this form. Fill it in everyday to allow tracking the pandemic.",
+  "modal.retake": "Retake this form with another person",
+  "modal.visualise": "Explore results (soon)",
   "age": "Age",
   "age.CHILD": "0-14 years old",
   "age.ADULT": "15-44 years old",
