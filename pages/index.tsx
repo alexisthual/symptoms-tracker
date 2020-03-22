@@ -354,7 +354,9 @@ const MainPage = ({ language }: any) => {
             </div>
           </div>
 
-          <div style={{ marginTop: 40 }}>{submitButton()}</div>
+          <div className="text-right" style={{ marginTop: 40 }}>
+            {submitButton()}
+          </div>
         </form>
 
         <div className="footer inline-flex">
