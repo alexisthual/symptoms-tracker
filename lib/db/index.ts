@@ -4,8 +4,6 @@
 // import 'reflect-metadata';
 import { ConnectionOptions, getConnectionManager } from "typeorm";
 
-console.log(process.env);
-
 const connectionOptions: ConnectionOptions = {
   type: "postgres",
   host: process.env.POSTGRES_HOST,
@@ -16,9 +14,9 @@ const connectionOptions: ConnectionOptions = {
   name: "covid",
   synchronize: true,
   // Needs to be .js, not sure why
-  entities: ["./db/entities/**/*.js"],
-  migrations: ["./db/migration/**/*.js"],
-  subscribers: ["./db/subscriber/**/*.js"]
+  entities: ["./lib/db/entities/**/*.js"],
+  migrations: ["./lib/db/migration/**/*.js"],
+  subscribers: ["./lib/db/subscriber/**/*.js"]
 };
 
 // Create a connection manager instance
