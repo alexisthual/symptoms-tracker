@@ -1,7 +1,12 @@
 import { useState, useEffect } from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
-import { headacheStates, feverStates, breathingStates } from "../lib/types";
+import {
+  ageCategories,
+  headacheStates,
+  feverStates,
+  breathingStates
+} from "../lib/types";
 
 import "spectre.css/dist/spectre.min.css";
 import "spectre.css/dist/spectre-exp.min.css";
@@ -9,7 +14,18 @@ import "spectre.css/dist/spectre-icons.min.css";
 import "../style.scss";
 
 const messages = defineMessages({
-  pick: { id: "pick" }
+  pick: { id: "pick" },
+  age: {
+    ...Object.keys(ageCategories)
+      .map((category: string) => {
+        return {
+          [category]: { id: `age.${category}` }
+        };
+      })
+      .reduce((acc: any, current: any) => {
+        return { ...acc, ...current };
+      }, {})
+  }
 });
 
 const MainPage = ({ language }: any) => {
@@ -98,11 +114,18 @@ const MainPage = ({ language }: any) => {
                       <option value="" disabled>
                         {intl.formatMessage(messages.pick)}
                       </option>
-                      <option value="0">Moins de 15 ans</option>
-                      <option value="1">15-44 ans</option>
-                      <option value="2">45-64 ans</option>
-                      <option value="3">65-74 ans</option>
-                      <option value="4">75 ans et plus</option>
+                      {Object.keys(ageCategories).map(
+                        (category: string, index: number) => {
+                          return (
+                            <option
+                              key={index}
+                              value={(ageCategories as any)[category]}
+                            >
+                              {intl.formatMessage(messages.age[category])}
+                            </option>
+                          );
+                        }
+                      )}
                     </select>
                   </div>
                 </div>
