@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
-import { headacheStates, feverStates, breathingStates } from "../../lib/types";
+import { headacheStates, feverStates, breathingStates } from "../../types";
 
 @Entity()
 export class Submission {

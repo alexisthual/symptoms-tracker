@@ -6,7 +6,7 @@ import {
   IntlConfig
 } from "react-intl";
 import cookie from "js-cookie";
-import getMessages from "../utils/getMessages";
+import getMessages from "../lib/getMessages";
 
 type localeType = IntlConfig["locale"];
 type messagesType = IntlConfig["messages"];

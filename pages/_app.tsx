@@ -1,8 +1,8 @@
 import App from "next/app";
 import IntlProvider from "../components/IntlProvider";
 
-import getLocale from "../utils/getLocale";
-import getMessages from "../utils/getMessages";
+import getLocale from "../lib/getLocale";
+import getMessages from "../lib/getMessages";
 
 // if (typeof window === 'undefined') {
 //   // dom parser for FormatedHTMLMessages
