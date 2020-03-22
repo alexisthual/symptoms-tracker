@@ -47,14 +47,14 @@ const MainPage = ({ language }: any) => {
     event => {
       event.preventDefault();
       const payload = {
-        age,
+        age: parseInt(age),
         zipcode,
         headache,
-        headacheSince,
+        headacheSince: parseInt(headacheSince),
         fever,
-        feverSince,
+        feverSince: parseInt(feverSince),
         breathing,
-        breathingSince
+        breathingSince: parseInt(breathingSince)
       };
 
       fetch("api/reply", {
