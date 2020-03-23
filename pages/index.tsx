@@ -1,3 +1,4 @@
+import Head from "next/head";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
@@ -121,6 +122,9 @@ const MainPage = ({ language }: any) => {
 
   return (
     <>
+      <Head>
+        <title>Symptoms Tracker</title>
+      </Head>
       <div className={`modal ${modalActive ? "active" : ""}`} id="modal-id">
         <a className="modal-overlay" aria-label="Close"></a>
         <div className="modal-container">

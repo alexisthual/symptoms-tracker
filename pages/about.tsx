@@ -1,5 +1,6 @@
+import Head from "next/head";
 import Link from "next/link";
-import { FormattedMessage } from "react-intl";
+import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 import Header from "../components/header";
 
@@ -8,9 +9,18 @@ import "spectre.css/dist/spectre-exp.min.css";
 import "spectre.css/dist/spectre-icons.min.css";
 import "../style.scss";
 
+const messages = defineMessages({
+  about: { id: "about" }
+});
+
 const AboutPage = ({ language }: any) => {
+  const intl = useIntl();
+
   return (
     <>
+      <Head>
+        <title>Symptoms Tracker | {intl.formatMessage(messages.about)}</title>
+      </Head>
       <Header language={language} />
 
       <div className="container grid-xs text-justify">
