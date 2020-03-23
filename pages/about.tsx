@@ -65,7 +65,7 @@ const AboutPage = ({ language }: any) => {
         <p>Pour participer activement à ce projet, vous pouvez :</p>
 
         <ul>
-          <li>faire participer le plus de personnes possibles</li>
+          <li>faire participer le plus de personnes possible</li>
           <li>
             traduire le site dans de{" "}
             <a href="https://github.com/alexisthual/symptoms-tracker/tree/master/lang">
