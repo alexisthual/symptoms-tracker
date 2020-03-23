@@ -84,6 +84,31 @@ const AboutPage = ({ language }: any) => {
           <em>alexis.thual [at] gmail [dot] com</em>.
         </p>
 
+        <h5>Crédits</h5>
+
+        <p>
+          L'application est déployée avec <a href="https://zeit.co">Zeit Now</a>
+          , utilise le thème{" "}
+          <a href="https://picturepan2.github.io/spectre">Spectre</a> et une
+          icone réalisée par{" "}
+          <a href="https://www.flaticon.com/authors/freepik">Freepik</a> sur{" "}
+          <a href="https://flaticon.com">flaticon.com</a>.
+        </p>
+
+        <h5>Contributions</h5>
+
+        <ul>
+          <li>
+            <a href="https://twitter.com/AlexisThual">@AlexisThual</a>
+          </li>
+          <li>
+            <a href="https://twitter.com/matti_sg">@matti_sg</a>
+          </li>
+          <li>
+            <a href="https://twitter.com/revolunet">@revolunet</a>
+          </li>
+        </ul>
+
         <div className="footer inline-flex">
           <Link href="/">
             <button className="btn btn-link">
