@@ -1,6 +1,6 @@
 {
   "title": "Symptoms Tracker",
-  "description": "English disclaimer",
+  "disclaimer": "This site is personal initiative and doesn't provide medical advise. This form aims at building a more precise evaluation of the number of true COVID-19 cases and track it's evolution. No personal data is collected",
   "modal.title": "Thank you for your cooperation!",
   "modal.content": "You can now help people confined with you answer this form. Fill it in everyday to allow tracking the pandemic.",
   "modal.retake": "Retake this form with another person",
@@ -27,5 +27,6 @@
   "breathing.NO": "No",
   "send": "Send",
   "sent": "Sent!",
-  "about": "About"
+  "about": "About",
+  "home": "Home"
 }
