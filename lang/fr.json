@@ -1,6 +1,6 @@
 {
   "title": "Symptoms Tracker",
-  "disclaimer": "Ce site est une initiative personnelle et ne livre pas de d'avis médical. Ce questionnaire vise à faciliter le suivi du développement des cas réels du COVID-19 au sein des populations confinées. Aucune donnée personnelle ou identifiante n'est collectée.",
+  "disclaimer": "Ce site est une initiative personnelle et ne livre pas d'avis médical. Ce questionnaire vise à faciliter le suivi du développement des cas réels du COVID-19 au sein des populations confinées. Aucune donnée personnelle ou identifiante n'est collectée.",
   "modal.title": "Merci pour votre participation !",
   "modal.content": "Vous pouvez maintenant aider les personnes confinées avec vous à renseigner leur état de santé et remplir à nouveau ce questionnaire demain pour permettre de suivre la pandémie.",
   "modal.retake": "Refaire le questionnaire",
@@ -28,5 +28,24 @@
   "send": "Envoyer",
   "sent": "Envoyé !",
   "about": "À Propos",
-  "home": "Accueil"
+  "home": "Accueil",
+  "about.collection.title": "Qu'est-ce que ce site collecte ?",
+  "about.collection.content": "Ne sont collectées que les données que vous entrez dans le formulaire. Rien d'autre.",
+  "about.utility.title": "Pourquoi est-ce utile ?",
+  "about.utility.content": "Le nombre de personnes diagnostiquées du COVID-19 représente mal la réalité du terrain : le nombre de personnes infectées est systématiquement beaucoup plus important. Une approximation plus fine du nombre de cas réels peut être déduite du nombre de décès liés au virus, mais <b>la collecte de données auprès des personnes confinées reste le moyen le plus direct d'évaluer l'évolution de la pandémie</b>.",
+  "about.usage.title": "À quoi peuvent servir les données collectées ?",
+  "about.usage.content": "Les données collectées sont ouvertes. Elles peuvent notamment être utilisées pour :",
+  "about.usage.list.0": "suivre l'évolution de la pandémie auprès des populations confinées",
+  "about.usage.list.1": "anticiper plus en amont et avec plus de précision les arrivées dans les services de soins",
+  "about.usage.list.2": "détecter plus vite l'apparition de nouveaux foyers d'infection",
+  "about.contribute.title": "Comment contribuer au projet ?",
+  "about.contribute.content": "Pour participer à ce projet, vous pouvez :",
+  "about.contribute.list.0": "faire participer le plus de personnes possible, notamment sur votre lieu de confinement",
+  "about.contribute.list.1": "aider à traduire le site dans de <a>nouvelles langues</a>",
+  "about.contribute.list.2": "créer des analyses de données à partir des informations collectées",
+  "about.contact.title": "Contact",
+  "about.contact.content": "Pour toute question, demande ou offre d'aide, prendre contact avec <b>alexis.thual [at] gmail [point] com</b>",
+  "about.credits.title": "Mentions",
+  "about.credits.content": "L'application est déployée avec <azeit>Zeit Now</azeit>, utilise le thème <aspectre>Spectre</aspectre> et une icone réalisée par <afreepik>Freepik</afreepik> sur <aflaticon>flaticon.com</aflaticon>",
+  "about.contributors.title": "Contributions"
 }

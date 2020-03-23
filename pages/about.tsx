@@ -24,78 +24,104 @@ const AboutPage = ({ language }: any) => {
       <Header language={language} />
 
       <div className="container grid-xs text-justify">
-        <h5>Qu'est-ce que ce site collecte ?</h5>
-
+        <h5>
+          <FormattedMessage id="about.collection.title" />
+        </h5>
         <p>
-          Ne sont collectées que les données que vous entrez dans le formulaire.
-          Rien d'autre.
+          <FormattedMessage id="about.collection.content" />
         </p>
 
-        <h5>Pourquoi est-ce utile ?</h5>
-
+        <h5>
+          <FormattedMessage id="about.utility.title" />
+        </h5>
         <p>
-          Le nombre de personnes diagnostiquées du COVID-19 représente mal la
-          réalité du terrain : le nombre de personnes infectées est
-          systématiquement beaucoup plus important. Une approximation plus fine
-          du nombre de cas réels peut être déduite du nombre de décès liés au
-          virus, mais la collecte de données auprès des personnes confinées
-          reste le moyen le plus direct d'évaluer l'évolution de la pandémie.
+          <FormattedMessage
+            id="about.utility.content"
+            values={{ b: (...chunks: any) => <b>{chunks}</b> }}
+          />
         </p>
 
-        <h5>À quoi peuvent servir les données collectées ?</h5>
-
+        <h5>
+          <FormattedMessage id="about.usage.title" />
+        </h5>
         <p>
-          Les données collectées sont ouvertes. Elles peuvent notamment être
-          utilisées pour :
+          <FormattedMessage id="about.usage.content" />
         </p>
-
         <ul>
-          <li>suivre l'évolution de la pandémie</li>
           <li>
-            anticiper plus en amont et avec plus de précision les arrivées dans
-            les services de soins
+            <FormattedMessage id="about.usage.list.2" />
           </li>
           <li>
-            détecter plus vite la naissance de nouveaux foyers d'infection
+            <FormattedMessage id="about.usage.list.1" />
+          </li>
+          <li>
+            <FormattedMessage id="about.usage.list.0" />
           </li>
         </ul>
 
-        <h5>Comment contribuer à ce projet ?</h5>
-
-        <p>Pour participer activement à ce projet, vous pouvez :</p>
+        <h5>
+          <FormattedMessage id="about.contribute.title" />
+        </h5>
+        <p>
+          <FormattedMessage id="about.contribute.content" />
+        </p>
 
         <ul>
-          <li>faire participer le plus de personnes possible</li>
           <li>
-            traduire le site dans de{" "}
-            <a href="https://github.com/alexisthual/symptoms-tracker/tree/master/lang">
-              nouvelles langues
-            </a>
+            <FormattedMessage id="about.contribute.list.0" />
           </li>
           <li>
-            créer des analyses de données à partir des informations collectées
+            <FormattedMessage
+              id="about.contribute.list.1"
+              values={{
+                a: (...chunks: any) => (
+                  <a href="https://github.com/alexisthual/symptoms-tracker/tree/master/lang">
+                    {chunks}
+                  </a>
+                )
+              }}
+            />
+          </li>
+          <li>
+            <FormattedMessage id="about.contribute.list.2" />
           </li>
         </ul>
 
-        <h5>Contact</h5>
-
+        <h5>
+          <FormattedMessage id="about.contact.title" />
+        </h5>
         <p>
-          Pour toute question, demande ou offre d'aide, prendre contact avec{" "}
-          <em>alexis.thual [at] gmail [dot] com</em>.
+          <FormattedMessage
+            id="about.contact.content"
+            values={{ b: (...chunks: any) => <b>{chunks}</b> }}
+          />
         </p>
 
-        <h5>Crédits</h5>
+        <h5>
+          <FormattedMessage id="about.credits.title" />
+        </h5>
 
         <p>
-          L'application est déployée avec <a href="https://zeit.co">Zeit Now</a>
-          , utilise le thème{" "}
-          <a href="https://picturepan2.github.io/spectre">Spectre</a> et une
-          icone réalisée par{" "}
-          <a href="https://www.flaticon.com/authors/freepik">Freepik</a> sur{" "}
-          <a href="https://flaticon.com">flaticon.com</a>.
+          <FormattedMessage
+            id="about.credits.content"
+            values={{
+              azeit: (...chunks: any) => <a href="https://zeit.co">{chunks}</a>,
+              aspectre: (...chunks: any) => (
+                <a href="https://picturepan2.github.io/spectre">{chunks}</a>
+              ),
+              afreepik: (...chunks: any) => (
+                <a href="https://www.flaticon.com/authors/freepik">{chunks}</a>
+              ),
+              aflaticon: (...chunks: any) => (
+                <a href="https://www.flaticon.com">{chunks}</a>
+              )
+            }}
+          />
         </p>
 
-        <h5>Contributions</h5>
+        <h5>
+          <FormattedMessage id="about.contributors.title" />
+        </h5>
 
         <ul>
           <li>
