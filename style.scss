@@ -30,3 +30,14 @@ $primary-color: #2965cc;
     margin-right: 4px;
   }
 }
+
+.toaster {
+  position: fixed;
+  z-index: 1;
+  bottom: 15px;
+  right: 15px;
+
+  .toast:not(:last-child) {
+    margin-bottom: 4px;
+  }
+}

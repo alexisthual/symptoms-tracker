@@ -47,6 +47,7 @@ const MainPage = ({ language }: any) => {
   const [breathingOk, updateBreathingOk] = useState(false);
   const [modalActive, updateModalActive] = useState(false);
   const [alreadySent, updateAlreadySent] = useState(false);
+  const [submissionStatus, updateSubmissionStatus] = useState(null);
 
   useEffect(() => {
     updateHeadacheOk(
@@ -70,8 +71,9 @@ const MainPage = ({ language }: any) => {
     if (!(!age || !zipcode || !headacheOk || !feverOk || !breathingOk)) {
       updateModalActive(true);
       updateAlreadySent(true);
+      updateSubmissionStatus("pending");
 
-      await fetch("/api/submission", {
+      fetch("/api/submission", {
         method: "POST",
         body: JSON.stringify({
           age,
@@ -87,7 +89,15 @@ const MainPage = ({ language }: any) => {
         headers: {
           "Content-Type": "application/json"
         }
-      });
+      })
+        .then(() => {
+          updateSubmissionStatus("success");
+        })
+        .catch((error: any) => {
+          console.log(error);
+          updateSubmissionStatus("error");
+          updateAlreadySent(false);
+        });
     }
   };
 
@@ -125,6 +135,34 @@ const MainPage = ({ language }: any) => {
       <Head>
         <title>Symptoms Tracker</title>
       </Head>
+
+      <div className="toaster container grid-xs">
+        <div className="columns col-gapless">
+          <div className="column col-8 col-ml-auto">
+            {submissionStatus === "pending" ? (
+              <div className="toast">
+                <i className="icon icon-upload"></i>{" "}
+                <FormattedMessage id="submission.pending" />
+              </div>
+            ) : null}
+
+            {submissionStatus === "success" ? (
+              <div className="toast toast-success">
+                <i className="icon icon-check"></i>{" "}
+                <FormattedMessage id="submission.success" />
+              </div>
+            ) : null}
+
+            {submissionStatus === "error" ? (
+              <div className="toast toast-error">
+                <i className="icon icon-cross"></i>{" "}
+                <FormattedMessage id="submission.error" />
+              </div>
+            ) : null}
+          </div>
+        </div>
+      </div>
+
       <div className={`modal ${modalActive ? "active" : ""}`} id="modal-id">
         <a className="modal-overlay" aria-label="Close"></a>
         <div className="modal-container">
@@ -137,13 +175,20 @@ const MainPage = ({ language }: any) => {
               }}
             ></a>
             <div className="modal-title h5">
-              <i className="icon icon-upload"></i>{" "}
               <FormattedMessage id="modal.title" />
             </div>
           </div>
           <div className="modal-body">
             <div className="content text-justify">
               <FormattedMessage id="modal.content" />
+              <ul>
+                <li>
+                  <FormattedMessage id="modal.content.list.0" />
+                </li>
+                <li>
+                  <FormattedMessage id="modal.content.list.1" />
+                </li>
+              </ul>
             </div>
           </div>
           <div className="modal-footer inline-flex">
