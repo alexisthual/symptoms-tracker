@@ -16,6 +16,7 @@ const sslOptions =
     : {};
 
 const connectionOptions: ConnectionOptions = {
+  name: "default",
   ...sslOptions,
   type: "postgres",
   host: process.env.POSTGRES_HOST,
@@ -23,12 +24,14 @@ const connectionOptions: ConnectionOptions = {
   username: process.env.POSTGRES_USER,
   password: process.env.POSTGRES_PASSWORD,
   database: process.env.POSTGRES_DB,
-  name: "covid",
-  synchronize: true,
-  // Needs to be .js, not sure why
+  synchronize: false,
+  // Needs to be .js
   entities: ["./lib/db/entities/**/*.js"],
-  migrations: ["./lib/db/migration/**/*.js"],
-  subscribers: ["./lib/db/subscriber/**/*.js"]
+  migrations: ["./lib/db/migrations/**/*.js"],
+  subscribers: ["./lib/db/subscribers/**/*.js"],
+  cli: {
+    migrationsDir: "./lib/db/migrations"
+  }
 };
 
 // Create a connection manager instance
