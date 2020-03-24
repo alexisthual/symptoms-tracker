@@ -1,9 +1,10 @@
 {
   "env": {
-    "POSTGRES_HOST": "@db-host",
-    "POSTGRES_PORT": "@db-port",
-    "POSTGRES_DB": "@db-name",
-    "POSTGRES_USER": "@db-user",
-    "POSTGRES_PASSWORD": "@db-pwd"
+    "POSTGRES_HOST": "@symptoms-tracker-db-host",
+    "POSTGRES_PORT": "@symptoms-tracker-db-port",
+    "POSTGRES_DB": "@symptoms-tracker-db-name",
+    "POSTGRES_USER": "@symptoms-tracker-db-user",
+    "POSTGRES_PASSWORD": "@symptoms-tracker-db-pwd",
+    "POSTGRES_SSL_CERT": "@symptoms-tracker-db-ssl-cert"
   }
 }
