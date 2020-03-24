@@ -1,5 +1,10 @@
 import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
-import { headacheStates, feverStates, breathingStates } from "../../types";
+import {
+  headacheStates,
+  feverStates,
+  coughStates,
+  breathingStates
+} from "../../types";
 
 @Entity()
 export class Submission {
@@ -39,6 +44,19 @@ export class Submission {
     nullable: true
   })
   feverSince: number;
+
+  @Column({
+    type: "enum",
+    enum: coughStates,
+    nullable: true
+  })
+  cough: coughStates;
+
+  @Column({
+    type: "smallint",
+    nullable: true
+  })
+  coughSince: number;
 
   @Column({
     type: "enum",
