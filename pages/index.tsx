@@ -90,6 +90,9 @@ const MainPage = ({ language }: any) => {
           "Content-Type": "application/json"
         }
       })
+        .then((response: any) => {
+          return response.json();
+        })
         .then(() => {
           updateSubmissionStatus("success");
         })
