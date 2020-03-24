@@ -22,13 +22,13 @@ This application consists of:
 yarn install
 ```
 
-### Run front and lambda
+### Run client and lambda
 
 ```
 now dev
 ```
 
-In case you only want to run the frontend:
+In case you only want to run the client:
 
 ```
 next dev
@@ -40,8 +40,52 @@ next dev
 docker-compose up
 ```
 
+### Create or generate migrations
+
+Requirements:
+
+- You should have `ts-node` installed globally (`yarn global add ts-node`).
+
+Commands:
+
+```
+typeorm migration:create -n migrationName
+typeorm migration:generate -n migrationName
+```
+
+### Run migrations
+
+Requirements:
+
+- Typeorm only handles `.js` migrations, so one needs to transpile them first:
+
+```
+tsc lib/db/migrations/**/*.ts --outDir build
+```
+
+Commands:
+
+```
+yarn run typeorm migration:run
+```
+
 ## Deploy to prod
+
+### Deploy client and lambda
 
 ```
 now --prod
+```
+
+### Run migrations to prod database
+
+Requirements:
+
+- you should have `dotenv-cli` installed globally (`yarn global add dotenv-cli`)
+- you should have a `./.env.prod` file with necessary variables setup (all necessary variables are listed in `./.env`)
+
+Commands:
+
+```
+dotenv -e .env.prod yarn run typeorm migration:run
 ```
