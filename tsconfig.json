@@ -1,5 +1,8 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
+    "rootDir": ".",
+    "outDir": "build",
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
@@ -11,7 +14,7 @@
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "isolatedModules": true,
+    "isolatedModules": false,
     "jsx": "preserve",
     "noImplicitAny": true,
     "noUnusedLocals": true,
@@ -19,11 +22,5 @@
     "experimentalDecorators": true
   },
   "exclude": ["node_modules"],
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "lib/db.js",
-    "api/entries/index.js"
-  ]
+  "include": ["next-env.d.ts", "./lib/**/*.ts"]
 }
