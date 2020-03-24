@@ -7,6 +7,7 @@ import {
   ageCategories,
   headacheStates,
   feverStates,
+  coughStates,
   breathingStates
 } from "../lib/types";
 import Header from "../components/header";
@@ -42,6 +43,9 @@ const MainPage = ({ language }: any) => {
   const [fever, updateFever] = useState();
   const [feverSince, updateFeverSince] = useState();
   const [feverOk, updateFeverOk] = useState(false);
+  const [cough, updateCough] = useState();
+  const [coughSince, updateCoughSince] = useState();
+  const [coughOk, updateCoughOk] = useState(false);
   const [breathing, updateBreathing] = useState();
   const [breathingSince, updateBreathingSince] = useState();
   const [breathingOk, updateBreathingOk] = useState(false);
@@ -58,6 +62,10 @@ const MainPage = ({ language }: any) => {
   useEffect(() => {
     updateFeverOk(feverSince !== undefined || fever === feverStates.NO);
   }, [fever, feverSince]);
+
+  useEffect(() => {
+    updateCoughOk(coughSince !== undefined || cough === coughStates.NO);
+  }, [cough, coughSince]);
 
   useEffect(() => {
     updateBreathingOk(
@@ -83,6 +91,8 @@ const MainPage = ({ language }: any) => {
           headacheSince,
           fever,
           feverSince,
+          cough,
+          coughSince,
           breathing,
           breathingSince
         }),
@@ -354,6 +364,50 @@ const MainPage = ({ language }: any) => {
                       value={feverSince}
                       onChange={(event: any) => {
                         updateFeverSince(event.target.value);
+                      }}
+                    />
+                  </div>
+                ) : null}
+              </div>
+            </div>
+
+            <div className="timeline-item">
+              {formIcon(coughOk)}
+              <div className="timeline-content">
+                <div className="form-group">
+                  <label className="form-label">
+                    <FormattedMessage id="cough.question" />
+                  </label>
+                  {Object.keys(coughStates).map(
+                    (state: string, index: number) => (
+                      <label key={index} className="form-radio">
+                        <input
+                          type="radio"
+                          value={state}
+                          checked={cough === state}
+                          onChange={(event: any) => {
+                            updateCough(event.target.value);
+                          }}
+                        />
+                        <i className="form-icon"></i>{" "}
+                        <FormattedMessage id={`cough.${state}`} />
+                      </label>
+                    )
+                  )}
+                </div>
+
+                {cough && cough !== coughStates.NO ? (
+                  <div className="form-group">
+                    <label className="form-label">
+                      <FormattedMessage id="howmanydays" />
+                    </label>
+                    <input
+                      type="number"
+                      className="form-input"
+                      placeholder={intl.formatMessage(messages.pick)}
+                      value={coughSince}
+                      onChange={(event: any) => {
+                        updateCoughSince(event.target.value);
                       }}
                     />
                   </div>

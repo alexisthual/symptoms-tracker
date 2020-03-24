@@ -17,6 +17,12 @@ export enum feverStates {
   NO = "NO"
 }
 
+export enum coughStates {
+  DRY = "DRY",
+  WET = "WET",
+  NO = "NO"
+}
+
 export enum breathingStates {
   HIGH = "HIGH",
   MILD = "MILD",
