@@ -306,7 +306,7 @@ const MainPage = ({ language }: any) => {
                     <input
                       type="number"
                       className="form-input"
-                      placeholder="Choisir"
+                      placeholder={intl.formatMessage(messages.pick)}
                       value={headacheSince}
                       onChange={(event: any) => {
                         updateHeadacheSince(event.target.value);
@@ -350,7 +350,7 @@ const MainPage = ({ language }: any) => {
                     <input
                       type="number"
                       className="form-input"
-                      placeholder="Choisir"
+                      placeholder={intl.formatMessage(messages.pick)}
                       value={feverSince}
                       onChange={(event: any) => {
                         updateFeverSince(event.target.value);
@@ -394,7 +394,7 @@ const MainPage = ({ language }: any) => {
                     <input
                       type="number"
                       className="form-input"
-                      placeholder="Choisir"
+                      placeholder={intl.formatMessage(messages.pick)}
                       value={breathingSince}
                       onChange={(event: any) => {
                         updateBreathingSince(event.target.value);
