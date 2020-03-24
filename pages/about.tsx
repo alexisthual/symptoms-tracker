@@ -105,6 +105,9 @@ const AboutPage = ({ language }: any) => {
           <FormattedMessage
             id="about.credits.content"
             values={{
+              ascalingo: (...chunks: any) => (
+                <a href="https://scalingo.com">{chunks}</a>
+              ),
               azeit: (...chunks: any) => <a href="https://zeit.co">{chunks}</a>,
               aspectre: (...chunks: any) => (
                 <a href="https://picturepan2.github.io/spectre">{chunks}</a>
