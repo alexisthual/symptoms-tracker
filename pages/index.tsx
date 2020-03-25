@@ -6,11 +6,25 @@ import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 import {
   ageCategories,
   headacheStates,
+  throatStates,
+  diarrheaStates,
+  feedingStates,
   feverStates,
   coughStates,
-  breathingStates
+  breathingStates,
+  hypertensionStates,
+  diabetesStates,
+  cancerStates,
+  pneumoStates,
+  dialyseStates,
+  liverStates,
+  immunoStates
 } from "../lib/types";
+import FormIcon from "../components/FormIcon";
 import Header from "../components/Header";
+import MedicalHistoryInput from "../components/MedicalHistoryInput";
+import NumberInput from "../components/NumberInput";
+import SymptomInput from "../components/SymptomInput";
 
 import "spectre.css/dist/spectre.min.css";
 import "spectre.css/dist/spectre-exp.min.css";
@@ -29,8 +43,35 @@ const messages = defineMessages({
       .reduce((acc: any, current: any) => {
         return { ...acc, ...current };
       }, {})
-  }
+  },
+  placeholders: {
+    zipcode: { id: "zipcode.placeholder" },
+    height: { id: "height.placeholder" },
+    weight: { id: "weight.placeholder" },
+    confined: { id: "confined.placeholder" }
+  },
+  optional: { id: "optional" }
 });
+
+interface ISubmitButtonProps {
+  alreadySent: boolean;
+  disabled: boolean;
+}
+
+const SubmitButton = ({ alreadySent, disabled }: ISubmitButtonProps) =>
+  alreadySent ? (
+    <button className="btn btn-primary btn-lg" disabled>
+      <i className="icon icon-check"></i> <FormattedMessage id="sent" />
+    </button>
+  ) : (
+    <button
+      type="submit"
+      className="btn btn-primary btn-lg"
+      disabled={disabled}
+    >
+      <FormattedMessage id="send" />
+    </button>
+  );
 
 const MainPage = ({ language }: any) => {
   const intl = useIntl();
@@ -40,6 +81,15 @@ const MainPage = ({ language }: any) => {
   const [headache, updateHeadache] = useState();
   const [headacheSince, updateHeadacheSince] = useState();
   const [headacheOk, updateHeadacheOk] = useState(false);
+  const [throat, updateThroat] = useState();
+  const [throatSince, updateThroatSince] = useState();
+  const [throatOk, updateThroatOk] = useState(false);
+  const [diarrhea, updateDiarrhea] = useState();
+  const [diarrheaSince, updateDiarrheaSince] = useState();
+  const [diarrheaOk, updateDiarrheaOk] = useState(false);
+  const [feeding, updateFeeding] = useState();
+  const [feedingSince, updateFeedingSince] = useState();
+  const [feedingOk, updateFeedingOk] = useState(false);
   const [fever, updateFever] = useState();
   const [feverSince, updateFeverSince] = useState();
   const [feverOk, updateFeverOk] = useState(false);
@@ -49,15 +99,40 @@ const MainPage = ({ language }: any) => {
   const [breathing, updateBreathing] = useState();
   const [breathingSince, updateBreathingSince] = useState();
   const [breathingOk, updateBreathingOk] = useState(false);
+  const [height, updateHeight] = useState();
+  const [weight, updateWeight] = useState();
+  const [hypertension, updateHypertension] = useState();
+  const [diabetes, updateDiabetes] = useState();
+  const [cancer, updateCancer] = useState();
+  const [pneumo, updatePneumo] = useState();
+  const [dialyse, updateDialyse] = useState();
+  const [liver, updateLiver] = useState();
+  const [immuno, updateImmuno] = useState();
+  const [confined, updateConfined] = useState();
   const [modalActive, updateModalActive] = useState(false);
   const [alreadySent, updateAlreadySent] = useState(false);
   const [submissionStatus, updateSubmissionStatus] = useState(null);
+  const [canSubmit, updateCanSubmit] = useState(false);
 
   useEffect(() => {
     updateHeadacheOk(
       headacheSince !== undefined || headache === headacheStates.NO
     );
   }, [headache, headacheSince]);
+
+  useEffect(() => {
+    updateThroatOk(throatSince !== undefined || throat === throatStates.NO);
+  }, [throat, throatSince]);
+
+  useEffect(() => {
+    updateDiarrheaOk(
+      diarrheaSince !== undefined || diarrhea === diarrheaStates.NO
+    );
+  }, [diarrhea, diarrheaSince]);
+
+  useEffect(() => {
+    updateFeedingOk(feedingSince !== undefined || feeding === feedingStates.NO);
+  }, [feeding, feedingSince]);
 
   useEffect(() => {
     updateFeverOk(feverSince !== undefined || fever === feverStates.NO);
@@ -73,10 +148,33 @@ const MainPage = ({ language }: any) => {
     );
   }, [breathing, breathingSince]);
 
+  useEffect(() => {
+    updateCanSubmit(
+      age !== null &&
+        zipcode !== null &&
+        headacheOk &&
+        throatOk &&
+        diarrheaOk &&
+        feedingOk &&
+        feverOk &&
+        breathingOk
+    );
+  }, [
+    age,
+    zipcode,
+    headacheOk,
+    throatOk,
+    diarrheaOk,
+    feedingOk,
+    feverOk,
+    coughOk,
+    breathingOk
+  ]);
+
   const sendSubmission = async (event: any) => {
     event.preventDefault();
 
-    if (!(!age || !zipcode || !headacheOk || !feverOk || !breathingOk)) {
+    if (canSubmit) {
       updateModalActive(true);
       updateAlreadySent(true);
       updateSubmissionStatus("pending");
@@ -89,12 +187,28 @@ const MainPage = ({ language }: any) => {
           submittedAt: new Date(Date.now()),
           headache,
           headacheSince,
+          throat,
+          throatSince,
+          diarrhea,
+          diarrheaSince,
+          feeding,
+          feedingSince,
           fever,
           feverSince,
           cough,
           coughSince,
           breathing,
-          breathingSince
+          breathingSince,
+          height,
+          weight,
+          hypertension,
+          diabetes,
+          cancer,
+          pneumo,
+          dialyse,
+          liver,
+          immuno,
+          confined
         }),
         headers: {
           "Content-Type": "application/json"
@@ -113,35 +227,6 @@ const MainPage = ({ language }: any) => {
         });
     }
   };
-
-  const formIcon = (condition: any) => (
-    <div className="timeline-left">
-      {condition ? (
-        <div className="timeline-icon icon-lg bg-success">
-          <i className="icon icon-check"></i>
-        </div>
-      ) : (
-        <div className="timeline-icon icon-lg bg-secondary">
-          <i className="icon icon-arrow-right"></i>
-        </div>
-      )}
-    </div>
-  );
-
-  const submitButton = () =>
-    alreadySent ? (
-      <button className="btn btn-primary bg-success" disabled>
-        <i className="icon icon-check"></i> <FormattedMessage id="sent" />
-      </button>
-    ) : (
-      <button
-        type="submit"
-        className="btn btn-primary"
-        disabled={!age || !zipcode || !headacheOk || !feverOk || !breathingOk}
-      >
-        <FormattedMessage id="send" />
-      </button>
-    );
 
   return (
     <>
@@ -228,7 +313,7 @@ const MainPage = ({ language }: any) => {
         <form onSubmit={sendSubmission}>
           <div className="timeline">
             <div className="timeline-item">
-              {formIcon(age !== "")}
+              <FormIcon condition={age !== ""} optional={false} />
               <div className="timeline-content">
                 <div className="form-group">
                   <label className="form-label">
@@ -263,205 +348,186 @@ const MainPage = ({ language }: any) => {
               </div>
             </div>
 
-            <div className="timeline-item">
-              {formIcon(zipcode !== undefined)}
-              <div className="timeline-content">
-                <div className="form-group">
-                  <label className="form-label">
-                    <FormattedMessage id="zipcode" />
-                  </label>
-                  <input
-                    type="number"
-                    className="form-input"
-                    placeholder={intl.formatMessage(messages.pick)}
-                    value={zipcode}
-                    onChange={(event: any) => {
-                      updateZipcode(event.target.value);
-                    }}
-                  />
-                </div>
-              </div>
-            </div>
+            <NumberInput
+              value={zipcode}
+              updateValue={updateZipcode}
+              name={"zipcode"}
+              optional={false}
+              messages={messages}
+            />
 
-            <div className="timeline-item">
-              {formIcon(headacheOk)}
-              <div className="timeline-content">
-                <div className="form-group">
-                  <label className="form-label">
-                    <FormattedMessage id="headache.question" />
-                  </label>
-                  {Object.keys(headacheStates).map(
-                    (state: string, index: number) => (
-                      <label key={index} className="form-radio">
-                        <input
-                          type="radio"
-                          value={state}
-                          checked={headache === state}
-                          onChange={(event: any) => {
-                            updateHeadache(event.target.value);
-                          }}
-                        />
-                        <i className="form-icon"></i>{" "}
-                        <FormattedMessage id={`headache.${state}`} />
-                      </label>
-                    )
-                  )}
-                </div>
+            <SymptomInput
+              states={headacheStates}
+              value={headache}
+              updateValue={updateHeadache}
+              valueSince={headacheSince}
+              updateValueSince={updateHeadacheSince}
+              inputOk={headacheOk}
+              name={"headache"}
+              optional={false}
+              messages={messages}
+            />
 
-                {headache && headache !== headacheStates.NO ? (
-                  <div className="form-group">
-                    <label className="form-label">
-                      <FormattedMessage id="howmanydays" />
-                    </label>
-                    <input
-                      type="number"
-                      className="form-input"
-                      placeholder={intl.formatMessage(messages.pick)}
-                      value={headacheSince}
-                      onChange={(event: any) => {
-                        updateHeadacheSince(event.target.value);
-                      }}
-                    />
-                  </div>
-                ) : null}
-              </div>
-            </div>
+            <SymptomInput
+              states={throatStates}
+              value={throat}
+              updateValue={updateThroat}
+              valueSince={throatSince}
+              updateValueSince={updateThroatSince}
+              inputOk={throatOk}
+              name={"throat"}
+              optional={false}
+              messages={messages}
+            />
 
-            <div className="timeline-item">
-              {formIcon(feverOk)}
-              <div className="timeline-content">
-                <div className="form-group">
-                  <label className="form-label">
-                    <FormattedMessage id="fever.question" />
-                  </label>
-                  {Object.keys(feverStates).map(
-                    (state: string, index: number) => (
-                      <label key={index} className="form-radio">
-                        <input
-                          type="radio"
-                          value={state}
-                          checked={fever === state}
-                          onChange={(event: any) => {
-                            updateFever(event.target.value);
-                          }}
-                        />
-                        <i className="form-icon"></i>{" "}
-                        <FormattedMessage id={`fever.${state}`} />
-                      </label>
-                    )
-                  )}
-                </div>
+            <SymptomInput
+              states={diarrheaStates}
+              value={diarrhea}
+              updateValue={updateDiarrhea}
+              valueSince={diarrheaSince}
+              updateValueSince={updateDiarrheaSince}
+              inputOk={diarrheaOk}
+              name={"diarrhea"}
+              optional={false}
+              messages={messages}
+            />
 
-                {fever && fever !== feverStates.NO ? (
-                  <div className="form-group">
-                    <label className="form-label">
-                      <FormattedMessage id="howmanydays" />
-                    </label>
-                    <input
-                      type="number"
-                      className="form-input"
-                      placeholder={intl.formatMessage(messages.pick)}
-                      value={feverSince}
-                      onChange={(event: any) => {
-                        updateFeverSince(event.target.value);
-                      }}
-                    />
-                  </div>
-                ) : null}
-              </div>
-            </div>
+            <SymptomInput
+              states={feedingStates}
+              value={feeding}
+              updateValue={updateFeeding}
+              valueSince={feedingSince}
+              updateValueSince={updateFeedingSince}
+              inputOk={feedingOk}
+              name={"feeding"}
+              optional={false}
+              messages={messages}
+            />
 
-            <div className="timeline-item">
-              {formIcon(coughOk)}
-              <div className="timeline-content">
-                <div className="form-group">
-                  <label className="form-label">
-                    <FormattedMessage id="cough.question" />
-                  </label>
-                  {Object.keys(coughStates).map(
-                    (state: string, index: number) => (
-                      <label key={index} className="form-radio">
-                        <input
-                          type="radio"
-                          value={state}
-                          checked={cough === state}
-                          onChange={(event: any) => {
-                            updateCough(event.target.value);
-                          }}
-                        />
-                        <i className="form-icon"></i>{" "}
-                        <FormattedMessage id={`cough.${state}`} />
-                      </label>
-                    )
-                  )}
-                </div>
+            <SymptomInput
+              states={feverStates}
+              value={fever}
+              updateValue={updateFever}
+              valueSince={feverSince}
+              updateValueSince={updateFeverSince}
+              inputOk={feverOk}
+              name={"fever"}
+              optional={false}
+              messages={messages}
+            />
 
-                {cough && cough !== coughStates.NO ? (
-                  <div className="form-group">
-                    <label className="form-label">
-                      <FormattedMessage id="howmanydays" />
-                    </label>
-                    <input
-                      type="number"
-                      className="form-input"
-                      placeholder={intl.formatMessage(messages.pick)}
-                      value={coughSince}
-                      onChange={(event: any) => {
-                        updateCoughSince(event.target.value);
-                      }}
-                    />
-                  </div>
-                ) : null}
-              </div>
-            </div>
+            <SymptomInput
+              states={coughStates}
+              value={cough}
+              updateValue={updateCough}
+              valueSince={coughSince}
+              updateValueSince={updateCoughSince}
+              inputOk={coughOk}
+              name={"cough"}
+              optional={false}
+              messages={messages}
+            />
 
-            <div className="timeline-item">
-              {formIcon(breathingOk)}
-              <div className="timeline-content">
-                <div className="form-group">
-                  <label className="form-label">
-                    <FormattedMessage id="breathing.question" />
-                  </label>
-                  {Object.keys(breathingStates).map(
-                    (state: string, index: number) => (
-                      <label key={index} className="form-radio">
-                        <input
-                          type="radio"
-                          value={state}
-                          checked={breathing === state}
-                          onChange={(event: any) => {
-                            updateBreathing(event.target.value);
-                          }}
-                        />
-                        <i className="form-icon"></i>{" "}
-                        <FormattedMessage id={`breathing.${state}`} />
-                      </label>
-                    )
-                  )}
-                </div>
+            <SymptomInput
+              states={breathingStates}
+              value={breathing}
+              updateValue={updateBreathing}
+              valueSince={breathingSince}
+              updateValueSince={updateBreathingSince}
+              inputOk={breathingOk}
+              name={"breathing"}
+              optional={false}
+              messages={messages}
+            />
 
-                {breathing && breathing !== breathingStates.NO ? (
-                  <div className="form-group">
-                    <label className="form-label">
-                      <FormattedMessage id="howmanydays" />
-                    </label>
-                    <input
-                      type="number"
-                      className="form-input"
-                      placeholder={intl.formatMessage(messages.pick)}
-                      value={breathingSince}
-                      onChange={(event: any) => {
-                        updateBreathingSince(event.target.value);
-                      }}
-                    />
-                  </div>
-                ) : null}
-              </div>
-            </div>
+            <div
+              className="divider text-center"
+              data-content={intl.formatMessage(messages.optional)}
+            ></div>
+
+            <NumberInput
+              value={height}
+              updateValue={updateHeight}
+              name={"height"}
+              optional={true}
+              messages={messages}
+            />
+
+            <NumberInput
+              value={weight}
+              updateValue={updateWeight}
+              name={"weight"}
+              optional={true}
+              messages={messages}
+            />
+
+            <MedicalHistoryInput
+              states={hypertensionStates}
+              value={hypertension}
+              updateValue={updateHypertension}
+              name={"hypertension"}
+              optional={true}
+            />
+
+            <MedicalHistoryInput
+              states={diabetesStates}
+              value={diabetes}
+              updateValue={updateDiabetes}
+              name={"diabetes"}
+              optional={true}
+            />
+
+            <MedicalHistoryInput
+              states={cancerStates}
+              value={cancer}
+              updateValue={updateCancer}
+              name={"cancer"}
+              optional={true}
+            />
+
+            <MedicalHistoryInput
+              states={pneumoStates}
+              value={pneumo}
+              updateValue={updatePneumo}
+              name={"pneumo"}
+              optional={true}
+            />
+
+            <MedicalHistoryInput
+              states={dialyseStates}
+              value={dialyse}
+              updateValue={updateDialyse}
+              name={"dialyse"}
+              optional={true}
+            />
+
+            <MedicalHistoryInput
+              states={liverStates}
+              value={liver}
+              updateValue={updateLiver}
+              name={"liver"}
+              optional={true}
+            />
+
+            <MedicalHistoryInput
+              states={immunoStates}
+              value={immuno}
+              updateValue={updateImmuno}
+              name={"immuno"}
+              optional={true}
+            />
+
+            <NumberInput
+              value={confined}
+              updateValue={updateConfined}
+              name={"confined"}
+              optional={true}
+              messages={messages}
+            />
           </div>
 
           <div className="text-right" style={{ marginTop: 40 }}>
-            {submitButton()}
+            <SubmitButton alreadySent={alreadySent} disabled={!canSubmit} />
           </div>
         </form>
 
