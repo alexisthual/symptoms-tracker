@@ -2,7 +2,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
-import Header from "../components/header";
+import Header from "../components/Header";
 
 import "spectre.css/dist/spectre.min.css";
 import "spectre.css/dist/spectre-exp.min.css";

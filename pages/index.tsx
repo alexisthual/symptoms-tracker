@@ -10,7 +10,7 @@ import {
   coughStates,
   breathingStates
 } from "../lib/types";
-import Header from "../components/header";
+import Header from "../components/Header";
 
 import "spectre.css/dist/spectre.min.css";
 import "spectre.css/dist/spectre-exp.min.css";
