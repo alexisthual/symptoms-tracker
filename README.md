@@ -60,7 +60,7 @@ Requirements:
 - Typeorm only handles `.js` migrations, so one needs to transpile them first:
 
 ```
-tsc lib/db/migrations/**/*.ts --outDir build
+tsc lib/db/**/*.ts --outDir build
 ```
 
 Commands:

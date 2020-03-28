@@ -1,14 +1,17 @@
 import { FormattedMessage, useIntl } from "react-intl";
 import FormIcon from "./FormIcon";
 
+import { sinceStates, healthStates } from "../lib/types";
+
 interface ISymptomInputProps {
   states: any;
   value: string;
   updateValue: any;
-  valueSince: number;
+  valueSince: string;
   updateValueSince: any;
   inputOk: boolean;
   name: string;
+  health: healthStates;
   optional: boolean;
   messages: any;
 }
@@ -21,6 +24,7 @@ const SymptomInput = ({
   updateValueSince,
   inputOk,
   name,
+  health,
   optional,
   messages
 }: ISymptomInputProps) => {
@@ -32,7 +36,11 @@ const SymptomInput = ({
       <div className="timeline-content">
         <div className="form-group">
           <label className="form-label">
-            <FormattedMessage id={`${name}.question`} />
+            <FormattedMessage
+              id={`${name}.question.${
+                health === healthStates.RECOVERED ? "past" : "present"
+              }`}
+            />
           </label>
           {Object.keys(states).map((state: string, index: number) => (
             <label key={index} className="form-radio">
@@ -50,20 +58,26 @@ const SymptomInput = ({
           ))}
         </div>
 
-        {value && value !== states.NO ? (
+        {health === healthStates.ILL && value && value !== states.NO ? (
           <div className="form-group">
             <label className="form-label">
               <FormattedMessage id="howmanydays" />
             </label>
-            <input
-              type="number"
-              className="form-input"
-              placeholder={intl.formatMessage(messages.pick)}
-              value={valueSince}
-              onChange={(event: any) => {
-                updateValueSince(event.target.value);
-              }}
-            />
+
+            {Object.keys(sinceStates).map((state: string, index: number) => (
+              <label key={index} className="form-radio">
+                <input
+                  type="radio"
+                  value={state}
+                  checked={valueSince === state}
+                  onChange={(event: any) => {
+                    updateValueSince(event.target.value);
+                  }}
+                />
+                <i className="form-icon"></i>{" "}
+                <FormattedMessage id={`sinceDays.${state}`} />
+              </label>
+            ))}
           </div>
         ) : null}
       </div>

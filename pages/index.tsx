@@ -5,24 +5,21 @@ import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 import {
   ageCategories,
+  covidTestStates,
+  covidResultStates,
+  healthStates,
+  feverStates,
+  coughStates,
+  tasteAndSmellStates,
   headacheStates,
   throatStates,
   diarrheaStates,
   feedingStates,
-  feverStates,
-  coughStates,
-  breathingStates,
-  hypertensionStates,
-  diabetesStates,
-  cancerStates,
-  pneumoStates,
-  dialyseStates,
-  liverStates,
-  immunoStates
+  breathingStates
 } from "../lib/types";
 import FormIcon from "../components/FormIcon";
 import Header from "../components/Header";
-import MedicalHistoryInput from "../components/MedicalHistoryInput";
+import MedicalHistoryCheckbox from "../components/MedicalHistoryCheckbox";
 import NumberInput from "../components/NumberInput";
 import SymptomInput from "../components/SymptomInput";
 
@@ -46,9 +43,10 @@ const messages = defineMessages({
   },
   placeholders: {
     zipcode: { id: "zipcode.placeholder" },
+    recoveredSince: { id: "recoveredSince.placeholder" },
     height: { id: "height.placeholder" },
     weight: { id: "weight.placeholder" },
-    confined: { id: "confined.placeholder" }
+    confinedWith: { id: "confinedWith.placeholder" }
   },
   optional: { id: "optional" }
 });
@@ -76,29 +74,90 @@ const SubmitButton = ({ alreadySent, disabled }: ISubmitButtonProps) =>
 const MainPage = ({ language }: any) => {
   const intl = useIntl();
 
-  const [age, updateAge] = useState("");
+  const addSymptomOkEffect = (value, valueSince, updateValueOk, states) => {
+    useEffect(() => {
+      let status = false;
+
+      switch (health) {
+        case healthStates.RECOVERED:
+          status = value !== undefined && value !== null;
+          break;
+        case healthStates.ILL:
+          status =
+            (valueSince !== undefined &&
+              valueSince !== "" &&
+              valueSince !== null) ||
+            value === states.NO;
+          break;
+        case healthStates.WELL:
+          status = true;
+          break;
+        default:
+          break;
+      }
+
+      updateValueOk(status);
+    }, [value, valueSince, health]);
+  };
+
+  const [age, updateAge] = useState();
   const [zipcode, updateZipcode] = useState();
-  const [headache, updateHeadache] = useState();
-  const [headacheSince, updateHeadacheSince] = useState();
-  const [headacheOk, updateHeadacheOk] = useState(false);
-  const [throat, updateThroat] = useState();
-  const [throatSince, updateThroatSince] = useState();
-  const [throatOk, updateThroatOk] = useState(false);
-  const [diarrhea, updateDiarrhea] = useState();
-  const [diarrheaSince, updateDiarrheaSince] = useState();
-  const [diarrheaOk, updateDiarrheaOk] = useState(false);
-  const [feeding, updateFeeding] = useState();
-  const [feedingSince, updateFeedingSince] = useState();
-  const [feedingOk, updateFeedingOk] = useState(false);
+  const [confinedWith, updateConfinedWith] = useState();
+  const [covidTest, updateCovidTest] = useState();
+  const [covidResult, updateCovidResult] = useState();
+  const [health, updateHealth] = useState();
+  const [recoveredSince, updateRecoveredSince] = useState();
+
   const [fever, updateFever] = useState();
   const [feverSince, updateFeverSince] = useState();
   const [feverOk, updateFeverOk] = useState(false);
+  addSymptomOkEffect(fever, feverSince, updateFeverOk, feverStates);
+
+  const [tasteAndSmell, updateTasteAndSmell] = useState();
+  const [tasteAndSmellSince, updateTasteAndSmellSince] = useState();
+  const [tasteAndSmellOk, updateTasteAndSmellOk] = useState(false);
+  addSymptomOkEffect(
+    tasteAndSmell,
+    tasteAndSmellSince,
+    updateTasteAndSmellOk,
+    tasteAndSmellStates
+  );
+
+  const [headache, updateHeadache] = useState();
+  const [headacheSince, updateHeadacheSince] = useState();
+  const [headacheOk, updateHeadacheOk] = useState(false);
+  addSymptomOkEffect(headache, headacheSince, updateHeadacheOk, headacheStates);
+
+  const [throat, updateThroat] = useState();
+  const [throatSince, updateThroatSince] = useState();
+  const [throatOk, updateThroatOk] = useState(false);
+  addSymptomOkEffect(throat, throatSince, updateThroatOk, throatStates);
+
+  const [diarrhea, updateDiarrhea] = useState();
+  const [diarrheaSince, updateDiarrheaSince] = useState();
+  const [diarrheaOk, updateDiarrheaOk] = useState(false);
+  addSymptomOkEffect(diarrhea, diarrheaSince, updateDiarrheaOk, diarrheaStates);
+
+  const [feeding, updateFeeding] = useState();
+  const [feedingSince, updateFeedingSince] = useState();
+  const [feedingOk, updateFeedingOk] = useState(false);
+  addSymptomOkEffect(feeding, feedingSince, updateFeedingOk, feedingStates);
+
   const [cough, updateCough] = useState();
   const [coughSince, updateCoughSince] = useState();
   const [coughOk, updateCoughOk] = useState(false);
+  addSymptomOkEffect(cough, coughSince, updateCoughOk, coughStates);
+
   const [breathing, updateBreathing] = useState();
   const [breathingSince, updateBreathingSince] = useState();
   const [breathingOk, updateBreathingOk] = useState(false);
+  addSymptomOkEffect(
+    breathing,
+    breathingSince,
+    updateBreathingOk,
+    breathingStates
+  );
+
   const [height, updateHeight] = useState();
   const [weight, updateWeight] = useState();
   const [hypertension, updateHypertension] = useState();
@@ -107,67 +166,74 @@ const MainPage = ({ language }: any) => {
   const [pneumo, updatePneumo] = useState();
   const [dialyse, updateDialyse] = useState();
   const [liver, updateLiver] = useState();
+  const [pregnant, updatePregnant] = useState();
   const [immuno, updateImmuno] = useState();
-  const [confined, updateConfined] = useState();
+  const [immunoSuppressor, updateImmunoSuppressor] = useState();
+
   const [modalActive, updateModalActive] = useState(false);
   const [alreadySent, updateAlreadySent] = useState(false);
   const [submissionStatus, updateSubmissionStatus] = useState(null);
   const [canSubmit, updateCanSubmit] = useState(false);
 
   useEffect(() => {
-    updateHeadacheOk(
-      headacheSince !== undefined || headache === headacheStates.NO
-    );
-  }, [headache, headacheSince]);
-
-  useEffect(() => {
-    updateThroatOk(throatSince !== undefined || throat === throatStates.NO);
-  }, [throat, throatSince]);
-
-  useEffect(() => {
-    updateDiarrheaOk(
-      diarrheaSince !== undefined || diarrhea === diarrheaStates.NO
-    );
-  }, [diarrhea, diarrheaSince]);
-
-  useEffect(() => {
-    updateFeedingOk(feedingSince !== undefined || feeding === feedingStates.NO);
-  }, [feeding, feedingSince]);
-
-  useEffect(() => {
-    updateFeverOk(feverSince !== undefined || fever === feverStates.NO);
-  }, [fever, feverSince]);
-
-  useEffect(() => {
-    updateCoughOk(coughSince !== undefined || cough === coughStates.NO);
-  }, [cough, coughSince]);
-
-  useEffect(() => {
-    updateBreathingOk(
-      breathingSince !== undefined || breathing === breathingStates.NO
-    );
-  }, [breathing, breathingSince]);
-
-  useEffect(() => {
-    updateCanSubmit(
+    let status =
+      age !== undefined &&
       age !== null &&
-        zipcode !== null &&
-        headacheOk &&
-        throatOk &&
-        diarrheaOk &&
-        feedingOk &&
-        feverOk &&
-        breathingOk
-    );
+      zipcode !== "" &&
+      zipcode !== undefined &&
+      zipcode !== null &&
+      confinedWith !== "" &&
+      confinedWith !== undefined &&
+      confinedWith !== null &&
+      health;
+
+    switch (health) {
+      case healthStates.ILL:
+        status =
+          status &&
+          feverOk &&
+          coughOk &&
+          tasteAndSmellOk &&
+          headacheOk &&
+          throatOk &&
+          diarrheaOk &&
+          feedingOk &&
+          breathingOk;
+        break;
+
+      case healthStates.RECOVERED:
+        status =
+          status &&
+          recoveredSince &&
+          feverOk &&
+          coughOk &&
+          tasteAndSmellOk &&
+          headacheOk &&
+          throatOk &&
+          diarrheaOk &&
+          feedingOk &&
+          breathingOk;
+        break;
+
+      case healthStates.WELL:
+        break;
+      default:
+        break;
+    }
+
+    updateCanSubmit(status);
   }, [
     age,
     zipcode,
+    confinedWith,
+    recoveredSince,
+    feverOk,
+    coughOk,
+    tasteAndSmellOk,
     headacheOk,
     throatOk,
     diarrheaOk,
     feedingOk,
-    feverOk,
-    coughOk,
     breathingOk
   ]);
 
@@ -182,9 +248,19 @@ const MainPage = ({ language }: any) => {
       fetch("/api/submission", {
         method: "POST",
         body: JSON.stringify({
+          submittedAt: new Date(Date.now()),
           age,
           zipcode,
-          submittedAt: new Date(Date.now()),
+          confinedWith,
+          health,
+          recoveredSince,
+          // Symptoms
+          fever,
+          feverSince,
+          cough,
+          coughSince,
+          tasteAndSmell,
+          tasteAndSmellSince,
           headache,
           headacheSince,
           throat,
@@ -193,12 +269,11 @@ const MainPage = ({ language }: any) => {
           diarrheaSince,
           feeding,
           feedingSince,
-          fever,
-          feverSince,
-          cough,
-          coughSince,
           breathing,
           breathingSince,
+          // Optional questions
+          covidTest,
+          covidResult,
           height,
           weight,
           hypertension,
@@ -207,8 +282,9 @@ const MainPage = ({ language }: any) => {
           pneumo,
           dialyse,
           liver,
+          pregnant,
           immuno,
-          confined
+          immunoSuppressor
         }),
         headers: {
           "Content-Type": "application/json"
@@ -217,8 +293,18 @@ const MainPage = ({ language }: any) => {
         .then((response: any) => {
           return response.json();
         })
-        .then(() => {
-          updateSubmissionStatus("success");
+        .then((result: any) => {
+          switch (result.message) {
+            case "success":
+              updateSubmissionStatus("success");
+              break;
+            case "error":
+              updateSubmissionStatus("error");
+              break;
+            default:
+              updateSubmissionStatus("error");
+              break;
+          }
         })
         .catch((error: any) => {
           console.log(error);
@@ -231,8 +317,367 @@ const MainPage = ({ language }: any) => {
   return (
     <>
       <Head>
-        <title>Symptoms Tracker</title>
+        <title>Corona Status</title>
       </Head>
+
+      <Header language={language} />
+
+      <div className="container grid-xs">
+        <form onSubmit={sendSubmission}>
+          <div className="timeline">
+            <div className="timeline-item">
+              <FormIcon condition={age !== undefined} optional={false} />
+              <div className="timeline-content">
+                <div className="form-group">
+                  <label className="form-label">
+                    <FormattedMessage id={`age.question`} />
+                  </label>
+                  {Object.keys(ageCategories).map(
+                    (state: string, index: number) => (
+                      <label key={index} className="form-radio">
+                        <input
+                          type="radio"
+                          value={state}
+                          checked={age === state}
+                          onChange={(event: any) => {
+                            updateAge(event.target.value);
+                          }}
+                        />
+                        <i className="form-icon"></i>{" "}
+                        <FormattedMessage id={`age.${state}`} />
+                      </label>
+                    )
+                  )}
+                </div>
+              </div>
+            </div>
+            <NumberInput
+              value={zipcode}
+              updateValue={updateZipcode}
+              name={"zipcode"}
+              optional={false}
+              messages={messages}
+            />
+
+            <NumberInput
+              value={confinedWith}
+              updateValue={updateConfinedWith}
+              name={"confinedWith"}
+              optional={false}
+              messages={messages}
+            />
+
+            <div className="timeline-item">
+              <FormIcon condition={health !== undefined} optional={false} />
+              <div className="timeline-content">
+                <div className="form-group">
+                  <label className="form-label">
+                    <FormattedMessage id={`health.question`} />
+                  </label>
+                  {Object.keys(healthStates).map(
+                    (state: string, index: number) => (
+                      <label key={index} className="form-radio">
+                        <input
+                          type="radio"
+                          value={state}
+                          checked={health === state}
+                          onChange={(event: any) => {
+                            updateHealth(event.target.value);
+                          }}
+                        />
+                        <i className="form-icon"></i>{" "}
+                        <FormattedMessage id={`health.${state}`} />
+                      </label>
+                    )
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {health === healthStates.RECOVERED ? (
+              <NumberInput
+                value={recoveredSince}
+                updateValue={updateRecoveredSince}
+                name={"recoveredSince"}
+                optional={false}
+                messages={messages}
+              />
+            ) : null}
+
+            {health !== undefined && health !== healthStates.WELL ? (
+              <>
+                <SymptomInput
+                  states={feverStates}
+                  value={fever}
+                  updateValue={updateFever}
+                  valueSince={feverSince}
+                  updateValueSince={updateFeverSince}
+                  inputOk={feverOk}
+                  name={"fever"}
+                  health={health}
+                  optional={false}
+                  messages={messages}
+                />
+
+                <SymptomInput
+                  states={coughStates}
+                  value={cough}
+                  updateValue={updateCough}
+                  valueSince={coughSince}
+                  updateValueSince={updateCoughSince}
+                  inputOk={coughOk}
+                  name={"cough"}
+                  health={health}
+                  optional={false}
+                  messages={messages}
+                />
+
+                <SymptomInput
+                  states={tasteAndSmellStates}
+                  value={tasteAndSmell}
+                  updateValue={updateTasteAndSmell}
+                  valueSince={tasteAndSmellSince}
+                  updateValueSince={updateTasteAndSmellSince}
+                  inputOk={tasteAndSmellOk}
+                  name={"tasteAndSmell"}
+                  health={health}
+                  optional={false}
+                  messages={messages}
+                />
+
+                <SymptomInput
+                  states={throatStates}
+                  value={throat}
+                  updateValue={updateThroat}
+                  valueSince={throatSince}
+                  updateValueSince={updateThroatSince}
+                  inputOk={throatOk}
+                  name={"throat"}
+                  health={health}
+                  optional={false}
+                  messages={messages}
+                />
+
+                <SymptomInput
+                  states={diarrheaStates}
+                  value={diarrhea}
+                  updateValue={updateDiarrhea}
+                  valueSince={diarrheaSince}
+                  updateValueSince={updateDiarrheaSince}
+                  inputOk={diarrheaOk}
+                  name={"diarrhea"}
+                  health={health}
+                  optional={false}
+                  messages={messages}
+                />
+
+                <SymptomInput
+                  states={headacheStates}
+                  value={headache}
+                  updateValue={updateHeadache}
+                  valueSince={headacheSince}
+                  updateValueSince={updateHeadacheSince}
+                  inputOk={headacheOk}
+                  name={"headache"}
+                  health={health}
+                  optional={false}
+                  messages={messages}
+                />
+
+                <SymptomInput
+                  states={feedingStates}
+                  value={feeding}
+                  updateValue={updateFeeding}
+                  valueSince={feedingSince}
+                  updateValueSince={updateFeedingSince}
+                  inputOk={feedingOk}
+                  name={"feeding"}
+                  health={health}
+                  optional={false}
+                  messages={messages}
+                />
+
+                <SymptomInput
+                  states={breathingStates}
+                  value={breathing}
+                  updateValue={updateBreathing}
+                  valueSince={breathingSince}
+                  updateValueSince={updateBreathingSince}
+                  inputOk={breathingOk}
+                  name={"breathing"}
+                  health={health}
+                  optional={false}
+                  messages={messages}
+                />
+              </>
+            ) : null}
+
+            <div
+              className="divider text-center"
+              data-content={intl.formatMessage(messages.optional)}
+            ></div>
+
+            <div className="timeline-item">
+              <FormIcon condition={covidTest !== undefined} optional={true} />
+              <div className="timeline-content">
+                <div className="form-group">
+                  <label className="form-label">
+                    <FormattedMessage id={`covid.test.question`} />
+                  </label>
+                  {Object.keys(covidTestStates).map(
+                    (state: string, index: number) => (
+                      <label key={index} className="form-radio">
+                        <input
+                          type="radio"
+                          value={state}
+                          checked={covidTest === state}
+                          onChange={(event: any) => {
+                            updateCovidTest(event.target.value);
+                          }}
+                        />
+                        <i className="form-icon"></i>{" "}
+                        <FormattedMessage id={`covid.test.${state}`} />
+                      </label>
+                    )
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {covidTest === covidTestStates.YES ? (
+              <div className="timeline-item">
+                <FormIcon
+                  condition={covidResult !== undefined}
+                  optional={true}
+                />
+                <div className="timeline-content">
+                  <div className="form-group">
+                    <label className="form-label">
+                      <FormattedMessage id={`covid.result.question`} />
+                    </label>
+                    {Object.keys(covidResultStates).map(
+                      (state: string, index: number) => (
+                        <label key={index} className="form-radio">
+                          <input
+                            type="radio"
+                            value={state}
+                            checked={covidResult === state}
+                            onChange={(event: any) => {
+                              updateCovidResult(event.target.value);
+                            }}
+                          />
+                          <i className="form-icon"></i>{" "}
+                          <FormattedMessage id={`covid.result.${state}`} />
+                        </label>
+                      )
+                    )}
+                  </div>
+                </div>
+              </div>
+            ) : null}
+
+            {health !== undefined && health !== healthStates.WELL ? (
+              <>
+                <NumberInput
+                  value={height}
+                  updateValue={updateHeight}
+                  name={"height"}
+                  optional={true}
+                  messages={messages}
+                />
+
+                <NumberInput
+                  value={weight}
+                  updateValue={updateWeight}
+                  name={"weight"}
+                  optional={true}
+                  messages={messages}
+                />
+
+                <div className="timeline-item">
+                  <FormIcon condition={false} optional={true} />
+                  <div className="timeline-content">
+                    <div className="form-group">
+                      <label className="form-label">
+                        Cochez vos antécédents médicaux :
+                      </label>
+
+                      <MedicalHistoryCheckbox
+                        value={hypertension}
+                        updateValue={updateHypertension}
+                        name="hypertension"
+                      />
+
+                      <MedicalHistoryCheckbox
+                        value={diabetes}
+                        updateValue={updateDiabetes}
+                        name="diabetes"
+                      />
+
+                      <MedicalHistoryCheckbox
+                        value={cancer}
+                        updateValue={updateCancer}
+                        name="cancer"
+                      />
+
+                      <MedicalHistoryCheckbox
+                        value={pneumo}
+                        updateValue={updatePneumo}
+                        name="pneumo"
+                      />
+
+                      <MedicalHistoryCheckbox
+                        value={dialyse}
+                        updateValue={updateDialyse}
+                        name="dialyse"
+                      />
+
+                      <MedicalHistoryCheckbox
+                        value={liver}
+                        updateValue={updateLiver}
+                        name="liver"
+                      />
+
+                      <MedicalHistoryCheckbox
+                        value={pregnant}
+                        updateValue={updatePregnant}
+                        name="pregnant"
+                      />
+
+                      <MedicalHistoryCheckbox
+                        value={immuno}
+                        updateValue={updateImmuno}
+                        name="immuno"
+                      />
+
+                      <MedicalHistoryCheckbox
+                        value={immunoSuppressor}
+                        updateValue={updateImmunoSuppressor}
+                        name="immunoSuppressor"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </>
+            ) : null}
+          </div>
+
+          <div className="text-right" style={{ marginTop: 40 }}>
+            <SubmitButton alreadySent={alreadySent} disabled={!canSubmit} />
+          </div>
+        </form>
+
+        <div className="footer inline-flex">
+          <Link href="/about">
+            <button className="btn btn-link">
+              <FormattedMessage id="about" />
+            </button>
+          </Link>
+          <a href="https://github.com/alexisthual/symptoms-tracker">
+            <button className="btn btn-link">Github</button>
+          </a>
+        </div>
+      </div>
 
       <div className="toaster container grid-xs">
         <div className="columns col-gapless">
@@ -286,6 +731,9 @@ const MainPage = ({ language }: any) => {
                 <li>
                   <FormattedMessage id="modal.content.list.1" />
                 </li>
+                <li>
+                  <FormattedMessage id="modal.content.list.2" />
+                </li>
               </ul>
             </div>
           </div>
@@ -304,242 +752,6 @@ const MainPage = ({ language }: any) => {
               <FormattedMessage id="modal.visualise" />
             </button>
           </div>
-        </div>
-      </div>
-
-      <Header language={language} />
-
-      <div className="container grid-xs">
-        <form onSubmit={sendSubmission}>
-          <div className="timeline">
-            <div className="timeline-item">
-              <FormIcon condition={age !== ""} optional={false} />
-              <div className="timeline-content">
-                <div className="form-group">
-                  <label className="form-label">
-                    <FormattedMessage id="age" />
-                  </label>
-                  <div className="form-group">
-                    <select
-                      className="form-select"
-                      value={age}
-                      onChange={(event: any) => {
-                        updateAge(event.target.value);
-                      }}
-                    >
-                      <option value="" disabled>
-                        {intl.formatMessage(messages.pick)}
-                      </option>
-                      {Object.keys(ageCategories).map(
-                        (category: string, index: number) => {
-                          return (
-                            <option
-                              key={index}
-                              value={(ageCategories as any)[category]}
-                            >
-                              {intl.formatMessage(messages.age[category])}
-                            </option>
-                          );
-                        }
-                      )}
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <NumberInput
-              value={zipcode}
-              updateValue={updateZipcode}
-              name={"zipcode"}
-              optional={false}
-              messages={messages}
-            />
-
-            <SymptomInput
-              states={headacheStates}
-              value={headache}
-              updateValue={updateHeadache}
-              valueSince={headacheSince}
-              updateValueSince={updateHeadacheSince}
-              inputOk={headacheOk}
-              name={"headache"}
-              optional={false}
-              messages={messages}
-            />
-
-            <SymptomInput
-              states={throatStates}
-              value={throat}
-              updateValue={updateThroat}
-              valueSince={throatSince}
-              updateValueSince={updateThroatSince}
-              inputOk={throatOk}
-              name={"throat"}
-              optional={false}
-              messages={messages}
-            />
-
-            <SymptomInput
-              states={diarrheaStates}
-              value={diarrhea}
-              updateValue={updateDiarrhea}
-              valueSince={diarrheaSince}
-              updateValueSince={updateDiarrheaSince}
-              inputOk={diarrheaOk}
-              name={"diarrhea"}
-              optional={false}
-              messages={messages}
-            />
-
-            <SymptomInput
-              states={feedingStates}
-              value={feeding}
-              updateValue={updateFeeding}
-              valueSince={feedingSince}
-              updateValueSince={updateFeedingSince}
-              inputOk={feedingOk}
-              name={"feeding"}
-              optional={false}
-              messages={messages}
-            />
-
-            <SymptomInput
-              states={feverStates}
-              value={fever}
-              updateValue={updateFever}
-              valueSince={feverSince}
-              updateValueSince={updateFeverSince}
-              inputOk={feverOk}
-              name={"fever"}
-              optional={false}
-              messages={messages}
-            />
-
-            <SymptomInput
-              states={coughStates}
-              value={cough}
-              updateValue={updateCough}
-              valueSince={coughSince}
-              updateValueSince={updateCoughSince}
-              inputOk={coughOk}
-              name={"cough"}
-              optional={false}
-              messages={messages}
-            />
-
-            <SymptomInput
-              states={breathingStates}
-              value={breathing}
-              updateValue={updateBreathing}
-              valueSince={breathingSince}
-              updateValueSince={updateBreathingSince}
-              inputOk={breathingOk}
-              name={"breathing"}
-              optional={false}
-              messages={messages}
-            />
-
-            <div
-              className="divider text-center"
-              data-content={intl.formatMessage(messages.optional)}
-            ></div>
-
-            <NumberInput
-              value={height}
-              updateValue={updateHeight}
-              name={"height"}
-              optional={true}
-              messages={messages}
-            />
-
-            <NumberInput
-              value={weight}
-              updateValue={updateWeight}
-              name={"weight"}
-              optional={true}
-              messages={messages}
-            />
-
-            <MedicalHistoryInput
-              states={hypertensionStates}
-              value={hypertension}
-              updateValue={updateHypertension}
-              name={"hypertension"}
-              optional={true}
-            />
-
-            <MedicalHistoryInput
-              states={diabetesStates}
-              value={diabetes}
-              updateValue={updateDiabetes}
-              name={"diabetes"}
-              optional={true}
-            />
-
-            <MedicalHistoryInput
-              states={cancerStates}
-              value={cancer}
-              updateValue={updateCancer}
-              name={"cancer"}
-              optional={true}
-            />
-
-            <MedicalHistoryInput
-              states={pneumoStates}
-              value={pneumo}
-              updateValue={updatePneumo}
-              name={"pneumo"}
-              optional={true}
-            />
-
-            <MedicalHistoryInput
-              states={dialyseStates}
-              value={dialyse}
-              updateValue={updateDialyse}
-              name={"dialyse"}
-              optional={true}
-            />
-
-            <MedicalHistoryInput
-              states={liverStates}
-              value={liver}
-              updateValue={updateLiver}
-              name={"liver"}
-              optional={true}
-            />
-
-            <MedicalHistoryInput
-              states={immunoStates}
-              value={immuno}
-              updateValue={updateImmuno}
-              name={"immuno"}
-              optional={true}
-            />
-
-            <NumberInput
-              value={confined}
-              updateValue={updateConfined}
-              name={"confined"}
-              optional={true}
-              messages={messages}
-            />
-          </div>
-
-          <div className="text-right" style={{ marginTop: 40 }}>
-            <SubmitButton alreadySent={alreadySent} disabled={!canSubmit} />
-          </div>
-        </form>
-
-        <div className="footer inline-flex">
-          <Link href="/about">
-            <button className="btn btn-link">
-              <FormattedMessage id="about" />
-            </button>
-          </Link>
-          <a href="https://github.com/alexisthual/symptoms-tracker">
-            <button className="btn btn-link">Github</button>
-          </a>
         </div>
       </div>
     </>

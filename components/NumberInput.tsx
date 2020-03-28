@@ -3,7 +3,7 @@ import { useIntl, FormattedMessage } from "react-intl";
 import FormIcon from "./FormIcon";
 
 interface INumberValueProps {
-  value: number;
+  value: string | number;
   updateValue: any;
   name: string;
   optional: boolean;
@@ -21,7 +21,10 @@ const NumberInput = ({
 
   return (
     <div className="timeline-item">
-      <FormIcon condition={value !== undefined} optional={optional} />
+      <FormIcon
+        condition={value !== undefined && value !== null && value !== ""}
+        optional={optional}
+      />
       <div className="timeline-content">
         <div className="form-group">
           <label className="form-label">

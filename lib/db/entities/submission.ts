@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 import {
+  sinceStates,
   headacheStates,
   feverStates,
   coughStates,
@@ -7,13 +8,11 @@ import {
   throatStates,
   diarrheaStates,
   feedingStates,
-  hypertensionStates,
-  diabetesStates,
-  cancerStates,
-  pneumoStates,
-  dialyseStates,
-  liverStates,
-  immunoStates
+  tasteAndSmellStates,
+  covidTestStates,
+  covidResultStates,
+  healthStates,
+  ageCategories
 } from "../../types";
 
 @Entity()
@@ -24,72 +23,48 @@ export class Submission {
   @Column("timestamp")
   submittedAt: number;
 
-  @Column("smallint")
-  age: number;
+  // DEMOGRAPHIC QUESTIONS
+
+  @Column({
+    type: "enum",
+    enum: ageCategories
+  })
+  age: ageCategories;
 
   // TODO: this won't be true for countries like UK, Canada
   @Column("integer")
   zipcode: number;
 
+  @Column("integer")
+  confinedWith: number;
+
   @Column({
     type: "enum",
-    enum: headacheStates
+    enum: healthStates
   })
-  headache: headacheStates;
+  health: healthStates;
 
   @Column({
     type: "smallint",
     nullable: true
   })
-  headacheSince: number;
+  recoveredSince: number;
+
+  // SYMPTOMS
 
   @Column({
     type: "enum",
-    enum: throatStates
-  })
-  throat: throatStates;
-
-  @Column({
-    type: "smallint",
+    enum: feverStates,
     nullable: true
-  })
-  throatSince: number;
-
-  @Column({
-    type: "enum",
-    enum: diarrheaStates
-  })
-  diarrhea: diarrheaStates;
-
-  @Column({
-    type: "smallint",
-    nullable: true
-  })
-  diarrheaSince: number;
-
-  @Column({
-    type: "enum",
-    enum: feedingStates
-  })
-  feeding: feedingStates;
-
-  @Column({
-    type: "smallint",
-    nullable: true
-  })
-  feedingSince: number;
-
-  @Column({
-    type: "enum",
-    enum: feverStates
   })
   fever: feverStates;
 
   @Column({
-    type: "smallint",
+    type: "enum",
+    enum: sinceStates,
     nullable: true
   })
-  feverSince: number;
+  feverSince: sinceStates;
 
   @Column({
     type: "enum",
@@ -99,22 +74,111 @@ export class Submission {
   cough: coughStates;
 
   @Column({
-    type: "smallint",
+    type: "enum",
+    enum: sinceStates,
     nullable: true
   })
-  coughSince: number;
+  coughSince: sinceStates;
 
   @Column({
     type: "enum",
-    enum: breathingStates
+    enum: tasteAndSmellStates,
+    nullable: true
+  })
+  tasteAndSmell: tasteAndSmellStates;
+
+  @Column({
+    type: "enum",
+    enum: sinceStates,
+    nullable: true
+  })
+  tasteAndSmellSince: sinceStates;
+
+  @Column({
+    type: "enum",
+    enum: throatStates,
+    nullable: true
+  })
+  throat: throatStates;
+
+  @Column({
+    type: "enum",
+    enum: sinceStates,
+    nullable: true
+  })
+  throatSince: sinceStates;
+
+  @Column({
+    type: "enum",
+    enum: diarrheaStates,
+    nullable: true
+  })
+  diarrhea: diarrheaStates;
+
+  @Column({
+    type: "enum",
+    enum: sinceStates,
+    nullable: true
+  })
+  diarrheaSince: sinceStates;
+
+  @Column({
+    type: "enum",
+    enum: headacheStates,
+    nullable: true
+  })
+  headache: headacheStates;
+
+  @Column({
+    type: "enum",
+    enum: sinceStates,
+    nullable: true
+  })
+  headacheSince: sinceStates;
+
+  @Column({
+    type: "enum",
+    enum: feedingStates,
+    nullable: true
+  })
+  feeding: feedingStates;
+
+  @Column({
+    type: "enum",
+    enum: sinceStates,
+    nullable: true
+  })
+  feedingSince: sinceStates;
+
+  @Column({
+    type: "enum",
+    enum: breathingStates,
+    nullable: true
   })
   breathing: breathingStates;
 
   @Column({
-    type: "smallint",
+    type: "enum",
+    enum: sinceStates,
     nullable: true
   })
-  breathingSince: number;
+  breathingSince: sinceStates;
+
+  // OPTIONAL QUESTIONS
+
+  @Column({
+    type: "enum",
+    enum: covidTestStates,
+    nullable: true
+  })
+  covidTest: covidTestStates;
+
+  @Column({
+    type: "enum",
+    enum: covidResultStates,
+    nullable: true
+  })
+  covidResult: covidResultStates;
 
   @Column({
     type: "integer",
@@ -129,57 +193,56 @@ export class Submission {
   weight: number;
 
   @Column({
-    type: "enum",
-    enum: hypertensionStates,
+    type: "boolean",
     nullable: true
   })
-  hypertension: hypertensionStates;
+  hypertension: boolean;
 
   @Column({
-    type: "enum",
-    enum: diabetesStates,
+    type: "boolean",
     nullable: true
   })
-  diabetes: diabetesStates;
+  diabetes: boolean;
 
   @Column({
-    type: "enum",
-    enum: cancerStates,
+    type: "boolean",
     nullable: true
   })
-  cancer: cancerStates;
+  cancer: boolean;
 
   @Column({
-    type: "enum",
-    enum: pneumoStates,
+    type: "boolean",
     nullable: true
   })
-  pneumo: pneumoStates;
+  pneumo: boolean;
 
   @Column({
-    type: "enum",
-    enum: dialyseStates,
+    type: "boolean",
     nullable: true
   })
-  dialyse: dialyseStates;
+  dialyse: boolean;
 
   @Column({
-    type: "enum",
-    enum: liverStates,
+    type: "boolean",
     nullable: true
   })
-  liver: liverStates;
+  liver: boolean;
 
   @Column({
-    type: "enum",
-    enum: immunoStates,
+    type: "boolean",
     nullable: true
   })
-  immuno: immunoStates;
+  pregnant: boolean;
 
   @Column({
-    type: "integer",
+    type: "boolean",
     nullable: true
   })
-  confined: number;
+  immuno: boolean;
+
+  @Column({
+    type: "boolean",
+    nullable: true
+  })
+  immunoSuppressor: boolean;
 }
