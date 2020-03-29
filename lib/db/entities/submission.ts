@@ -181,16 +181,10 @@ export class Submission {
   covidResult: covidResultStates;
 
   @Column({
-    type: "integer",
+    type: "smallint",
     nullable: true
   })
-  height: number;
-
-  @Column({
-    type: "integer",
-    nullable: true
-  })
-  weight: number;
+  bmi: number;
 
   @Column({
     type: "boolean",

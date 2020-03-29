@@ -240,6 +240,12 @@ const MainPage = ({ language }: any) => {
   const sendSubmission = async (event: any) => {
     event.preventDefault();
 
+    const getBMI = (weight: number, height: number) => {
+      return weight && weight > 0 && height && height > 0
+        ? Math.floor(weight / (height / 100) ** 2)
+        : null;
+    };
+
     if (canSubmit) {
       updateModalActive(true);
       updateAlreadySent(true);
@@ -274,8 +280,7 @@ const MainPage = ({ language }: any) => {
           // Optional questions
           covidTest,
           covidResult,
-          height,
-          weight,
+          bmi: getBMI(weight, height),
           hypertension,
           diabetes,
           cancer,
