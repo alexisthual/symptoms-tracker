@@ -22,6 +22,7 @@ import Header from "../components/Header";
 import MedicalHistoryCheckbox from "../components/MedicalHistoryCheckbox";
 import NumberInput from "../components/NumberInput";
 import SymptomInput from "../components/SymptomInput";
+import ZipInput from "../components/ZipInput";
 
 import "spectre.css/dist/spectre.min.css";
 import "spectre.css/dist/spectre-exp.min.css";
@@ -351,12 +352,14 @@ const MainPage = ({ language }: any) => {
                 </div>
               </div>
             </div>
-            <NumberInput
+            <ZipInput
               value={zipcode}
               updateValue={updateZipcode}
               name={"zipcode"}
-              optional={false}
               messages={messages}
+              optional={false}
+              pattern={"^[0-9]{5,5}$"} // todo: load from /lang
+              zipLength={5} // todo: load from /lang
             />
 
             <NumberInput
