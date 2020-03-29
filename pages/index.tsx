@@ -245,6 +245,15 @@ const MainPage = ({ language }: any) => {
       updateAlreadySent(true);
       updateSubmissionStatus("pending");
 
+      const getRandomInt = (max: number) => {
+        return Math.floor(Math.random() * Math.floor(max));
+      };
+
+      const blurDate = () => {
+        const now = new Date(Date.now());
+        return new Date(now.setMinutes(getRandomInt(60)));
+      };
+
       fetch("/api/submission", {
         method: "POST",
         body: JSON.stringify({
@@ -765,13 +774,3 @@ MainPage.getInitialProps = async () => {
 };
 
 export default MainPage;
-
-// helpers
-const getRandomInt = (max: number) => {
-  return Math.floor(Math.random() * Math.floor(max));
-};
-
-const blurDate = () => {
-  const now = new Date(Date.now());
-  return new Date(now.setMinutes(getRandomInt(60)));
-};
