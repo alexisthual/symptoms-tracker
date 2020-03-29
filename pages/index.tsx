@@ -359,7 +359,6 @@ const MainPage = ({ language }: any) => {
               messages={messages}
               optional={false}
               pattern={"^[0-9]{5,5}$"} // todo: load from /lang
-              zipLength={5} // todo: load from /lang
             />
 
             <NumberInput
