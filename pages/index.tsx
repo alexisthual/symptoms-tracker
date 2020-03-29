@@ -248,7 +248,7 @@ const MainPage = ({ language }: any) => {
       fetch("/api/submission", {
         method: "POST",
         body: JSON.stringify({
-          submittedAt: new Date(Date.now()),
+          submittedAt: blurDate(),
           age,
           zipcode,
           confinedWith,
@@ -765,3 +765,13 @@ MainPage.getInitialProps = async () => {
 };
 
 export default MainPage;
+
+// helpers
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
+
+function blurDate() {
+  const now = new Date(Date.now());
+  return new Date(now.setMinutes(getRandomInt(60)));
+}
