@@ -20,6 +20,7 @@
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-intl": "^4.2.2",
+    "react-zipcode": "^1.0.1",
     "reflect-metadata": "^0.1.13",
     "serverless-pg": "^0.1.1",
     "spectre.css": "^0.5.8",

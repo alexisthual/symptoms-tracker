@@ -6262,6 +6262,13 @@ react-is@^16.7.0, react-is@^16.8.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
+react-zipcode@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/react-zipcode/-/react-zipcode-1.0.1.tgz#d1b9cf69b4db6daa12e9156ef4e982bf66b60606"
+  integrity sha512-giSzsh0r0Aj43upjMBOr1JlCChxAKUIEoxMwNEgVeUm9pAiicuOzdRBS6aTBywevPgOCyCHgsmFKWvUJ9ZlVow==
+  dependencies:
+    zippo "~1.0.1"
+
 react@^16.7.0:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react/-/react-16.13.1.tgz#2e818822f1a9743122c063d6410d85c1e3afe48e"
@@ -7977,3 +7984,8 @@ yargs@^7.0.0:
     which-module "^1.0.0"
     y18n "^3.2.1"
     yargs-parser "^5.0.0"
+
+zippo@~1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/zippo/-/zippo-1.0.1.tgz#b9fe75f3b5661ffff8e2ed03f06ced8bba1ffe74"
+  integrity sha1-uf5187VmH//44u0D8Gzti7of/nQ=

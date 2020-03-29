@@ -275,17 +275,7 @@ var Submission = /** @class */ (function() {
       })
     ],
     Submission.prototype,
-    "height"
-  );
-  __decorate(
-    [
-      typeorm_1.Column({
-        type: "integer",
-        nullable: true
-      })
-    ],
-    Submission.prototype,
-    "weight"
+    "imc"
   );
   __decorate(
     [

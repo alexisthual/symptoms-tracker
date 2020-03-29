@@ -240,6 +240,9 @@ const MainPage = ({ language }: any) => {
   const sendSubmission = async (event: any) => {
     event.preventDefault();
 
+    const getIMC = (weight: number, height: number) => {
+      return weight / (height / 100) ** 2;
+    };
     if (canSubmit) {
       updateModalActive(true);
       updateAlreadySent(true);
@@ -274,8 +277,7 @@ const MainPage = ({ language }: any) => {
           // Optional questions
           covidTest,
           covidResult,
-          height,
-          weight,
+          imc: getIMC(weight, height),
           hypertension,
           diabetes,
           cancer,
