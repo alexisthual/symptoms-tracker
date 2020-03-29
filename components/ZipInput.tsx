@@ -35,7 +35,7 @@ const ZipInput = ({
           </label>
           <input
             type="text"
-            className="orm-input"
+            className="form-input"
             value={value}
             placeholder={intl.formatMessage(messages.placeholders[name])}
             onChange={(event: any) => {
