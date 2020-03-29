@@ -767,11 +767,11 @@ MainPage.getInitialProps = async () => {
 export default MainPage;
 
 // helpers
-function getRandomInt(max) {
+const getRandomInt = (max: number) => {
   return Math.floor(Math.random() * Math.floor(max));
-}
+};
 
-function blurDate() {
+const blurDate = () => {
   const now = new Date(Date.now());
   return new Date(now.setMinutes(getRandomInt(60)));
-}
+};
