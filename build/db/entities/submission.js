@@ -270,12 +270,12 @@ var Submission = /** @class */ (function() {
   __decorate(
     [
       typeorm_1.Column({
-        type: "integer",
+        type: "smallint",
         nullable: true
       })
     ],
     Submission.prototype,
-    "imc"
+    "bmi"
   );
   __decorate(
     [
