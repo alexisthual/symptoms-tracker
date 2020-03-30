@@ -23,12 +23,15 @@ const ZipInput = ({
   const intl = useIntl();
   const regexp = new RegExp(pattern);
   const inputIsValid = regexp.test(value);
+
   return (
     <div className="timeline-item">
       <FormIcon condition={inputIsValid} optional={optional} />
       <div className="timeline-content">
         <div
-          className={`form-group ${inputIsValid ? "has-success" : "has-error"}`}
+          className={`form-group ${
+            value ? (inputIsValid ? "has-success" : "has-error") : ""
+          }`}
         >
           <label className="form-label">
             <FormattedMessage id={`${name}.question`} />
@@ -42,7 +45,10 @@ const ZipInput = ({
               updateValue(event.target.value);
             }}
           />
-          {inputIsValid || value === undefined ? null : (
+          {inputIsValid ||
+          value === undefined ||
+          value === "" ||
+          value === null ? null : (
             <p className="form-input-hint">
               <FormattedMessage id="zipcode.invalid" />
             </p>
