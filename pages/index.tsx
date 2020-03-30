@@ -295,7 +295,7 @@ const MainPage = ({ language }: any) => {
           return response.json();
         })
         .then((result: any) => {
-          switch (result.message) {
+          switch (result.status) {
             case "success":
               updateSubmissionStatus("success");
               break;
