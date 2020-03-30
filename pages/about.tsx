@@ -2,6 +2,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
+import Footer from "../components/Footer";
 import Header from "../components/Header";
 
 import "spectre.css/dist/spectre.min.css";
@@ -138,16 +139,7 @@ const AboutPage = ({ language }: any) => {
           </li>
         </ul>
 
-        <div className="footer inline-flex">
-          <Link href="/">
-            <button className="btn btn-link">
-              <FormattedMessage id="home" />
-            </button>
-          </Link>
-          <a href="https://github.com/alexisthual/symptoms-tracker">
-            <button className="btn btn-link">Github</button>
-          </a>
-        </div>
+        <Footer />
       </div>
     </>
   );

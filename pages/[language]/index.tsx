@@ -1,3 +1,3 @@
-import MainPage from "../index";
+import SubmissionPage from "../submission";
 
-export default MainPage;
+export default SubmissionPage;
