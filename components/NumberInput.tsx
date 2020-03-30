@@ -33,6 +33,7 @@ const NumberInput = ({
           <input
             type="number"
             className="form-input"
+            min="0"
             placeholder={intl.formatMessage(messages.placeholders[name])}
             value={value}
             onChange={(event: any) => {
