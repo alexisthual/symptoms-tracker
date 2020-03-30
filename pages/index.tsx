@@ -252,9 +252,10 @@ const MainPage = ({ language }: any) => {
       updateAlreadySent(true);
       updateSubmissionStatus("pending");
 
-      // Returns current datetime +- n minutes
-      const blurredNow = (minutes: number) => {
-        const randomMinutes = (Math.random() - 0.5) * minutes * 60 * 1000;
+      // Returns current datetime +- m minutes.
+      // The "randomness" range is thus 2 * m.
+      const blurredNow = (m: number) => {
+        const randomMinutes = 2 * (Math.random() - 0.5) * m * 60 * 1000;
         const submissionDatetime = new Date(Date.now() + randomMinutes);
         submissionDatetime.setSeconds(0);
         submissionDatetime.setMilliseconds(0);
@@ -264,7 +265,7 @@ const MainPage = ({ language }: any) => {
       fetch("/api/submission", {
         method: "POST",
         body: JSON.stringify({
-          submittedAt: blurredNow(30),
+          submittedAt: blurredNow(15),
           age,
           zipcode,
           confinedWith,
