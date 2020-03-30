@@ -241,15 +241,30 @@ const MainPage = ({ language }: any) => {
   const sendSubmission = async (event: any) => {
     event.preventDefault();
 
+    const getBMI = (weight: number, height: number) => {
+      return weight && weight > 0 && height && height > 0
+        ? Math.floor(weight / (height / 100) ** 2)
+        : null;
+    };
+
     if (canSubmit) {
       updateModalActive(true);
       updateAlreadySent(true);
       updateSubmissionStatus("pending");
 
+      const getRandomInt = (max: number) => {
+        return Math.floor(Math.random() * Math.floor(max));
+      };
+
+      const blurDate = () => {
+        const now = new Date(Date.now());
+        return new Date(now.setMinutes(getRandomInt(60)));
+      };
+
       fetch("/api/submission", {
         method: "POST",
         body: JSON.stringify({
-          submittedAt: new Date(Date.now()),
+          submittedAt: blurDate(),
           age,
           zipcode,
           confinedWith,
@@ -275,8 +290,7 @@ const MainPage = ({ language }: any) => {
           // Optional questions
           covidTest,
           covidResult,
-          height,
-          weight,
+          bmi: getBMI(weight, height),
           hypertension,
           diabetes,
           cancer,
@@ -359,7 +373,6 @@ const MainPage = ({ language }: any) => {
               messages={messages}
               optional={false}
               pattern={"^[0-9]{5,5}$"} // todo: load from /lang
-              zipLength={5} // todo: load from /lang
             />
 
             <NumberInput

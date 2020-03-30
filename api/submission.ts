@@ -13,8 +13,8 @@ module.exports = async (req: any, res: any) => {
       submissionRepository
         .save({
           // Blur zipcode
-          zipcode: zipcodes[zipcode],
-          ...req.body
+          ...req.body,
+          zipcode: Number(zipcodes[zipcode])
         })
         .then(() => {
           res.status(200).json({
