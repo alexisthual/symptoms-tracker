@@ -252,19 +252,19 @@ const MainPage = ({ language }: any) => {
       updateAlreadySent(true);
       updateSubmissionStatus("pending");
 
-      const getRandomInt = (max: number) => {
-        return Math.floor(Math.random() * Math.floor(max));
-      };
-
-      const blurDate = () => {
-        const now = new Date(Date.now());
-        return new Date(now.setMinutes(getRandomInt(60)));
+      // Returns current datetime +- n minutes
+      const blurredNow = (minutes: number) => {
+        const randomMinutes = (Math.random() - 0.5) * minutes * 60 * 1000;
+        const submissionDatetime = new Date(Date.now() + randomMinutes);
+        submissionDatetime.setSeconds(0);
+        submissionDatetime.setMilliseconds(0);
+        return new Date(submissionDatetime);
       };
 
       fetch("/api/submission", {
         method: "POST",
         body: JSON.stringify({
-          submittedAt: blurDate(),
+          submittedAt: blurredNow(30),
           age,
           zipcode,
           confinedWith,
