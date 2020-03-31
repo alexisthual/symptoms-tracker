@@ -31,6 +31,8 @@ import "spectre.css/dist/spectre.min.css";
 import "spectre.css/dist/spectre-exp.min.css";
 import "spectre.css/dist/spectre-icons.min.css";
 import "../style.scss";
+import { NextApiRequest, NextPageContext } from "next";
+import { IncomingMessage } from "http";
 
 const messages = defineMessages({
   pick: { id: "pick" },
@@ -827,13 +829,20 @@ const FormPage = ({ captcha }: IFormPageProps) => {
   );
 };
 
-FormPage.getInitialProps = async () => {
-  const baseUrl =
-    process.env.NODE_ENV === "production"
-      ? "https://coronavirus.fr"
-      : "http://localhost:3000";
+// Taken from: https://spectrum.chat/next-js/general/calling-pages-api-directly-in-ssr-getinitialprops~8416c24b-19dc-46eb-aab7-8943a0c4a92e?m=MTU3MzE1ODE2MzY4OA==
+const apiUrl = (path: string, req: IncomingMessage) => {
+  if (!req && typeof window !== "undefined") return path;
+  const host = req
+    ? req.headers["x-forwarded-host"] || req.headers.host
+    : window.location.host;
+  const proto = req
+    ? req.headers["x-forwarded-proto"] || "http"
+    : window.location.protocol.slice(0, -1);
+  return `${proto}://${host}${path}`;
+};
 
-  const res = await fetch(`${baseUrl}/api/captcha`);
+FormPage.getInitialProps = async ({ req }: NextPageContext) => {
+  const res = await fetch(apiUrl("/api/captcha", req));
   const captcha = await res.json();
 
   return {
