@@ -30,6 +30,7 @@
     "sqlite-async": "^1.0.12",
     "sqlite3": "^4.1.1",
     "svg-captcha": "^1.4.0",
+    "swr": "^0.2.0",
     "typeorm": "^0.2.24"
   },
   "license": "MIT",

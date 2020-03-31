@@ -93,6 +93,7 @@
   "confinedWith.placeholder": "Personnes confinées",
   "captcha.question": "Recopiez le texte ci-dessous",
   "captcha.placeholder": "Exemple : 8r5T",
+  "captcha.error": "L'image n'a pu être chargée.",
   "verification": "Vérification",
   "send": "Envoyer",
   "sent": "Envoyé !",

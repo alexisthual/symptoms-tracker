@@ -1,7 +1,10 @@
+import { IncomingMessage } from "http";
 import fetch from "isomorphic-unfetch";
+import { NextPageContext } from "next";
 import Head from "next/head";
 import { useState, useEffect } from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
+import useSWR from "swr";
 
 import {
   ageCategories,
@@ -31,8 +34,6 @@ import "spectre.css/dist/spectre.min.css";
 import "spectre.css/dist/spectre-exp.min.css";
 import "spectre.css/dist/spectre-icons.min.css";
 import "../style.scss";
-import { NextApiRequest, NextPageContext } from "next";
-import { IncomingMessage } from "http";
 
 const messages = defineMessages({
   pick: { id: "pick" },
@@ -83,15 +84,14 @@ const SubmitButton = ({ alreadySent, disabled }: ISubmitButtonProps) =>
     </button>
   );
 
-interface IFormPageProps {
-  captcha: {
-    id: string;
-    data: any;
-  };
-}
+const fetcher = url => fetch(url).then(r => r.json());
 
-const FormPage = ({ captcha }: IFormPageProps) => {
+const FormPage = () => {
   const intl = useIntl();
+  const { data: captcha, error: captchaError } = useSWR(
+    "/api/captcha",
+    fetcher
+  );
 
   const addSymptomOkEffect = (value, valueSince, updateValueOk, states) => {
     useEffect(() => {
@@ -721,7 +721,17 @@ const FormPage = ({ captcha }: IFormPageProps) => {
                   <label className="form-label">
                     <FormattedMessage id="captcha.question" />
                   </label>
-                  <div dangerouslySetInnerHTML={{ __html: captcha.data }}></div>
+                  {captchaError ? (
+                    <p>
+                      <FormattedMessage id="captcha.loadingError" />
+                    </p>
+                  ) : captcha ? (
+                    <div
+                      dangerouslySetInnerHTML={{ __html: captcha.data }}
+                    ></div>
+                  ) : (
+                    <p className="loading"></p>
+                  )}
                   <input
                     className="form-input"
                     type="text"
@@ -827,27 +837,6 @@ const FormPage = ({ captcha }: IFormPageProps) => {
       </div>
     </>
   );
-};
-
-// Taken from: https://spectrum.chat/next-js/general/calling-pages-api-directly-in-ssr-getinitialprops~8416c24b-19dc-46eb-aab7-8943a0c4a92e?m=MTU3MzE1ODE2MzY4OA==
-const apiUrl = (path: string, req: IncomingMessage) => {
-  if (!req && typeof window !== "undefined") return path;
-  const host = req
-    ? req.headers["x-forwarded-host"] || req.headers.host
-    : window.location.host;
-  const proto = req
-    ? req.headers["x-forwarded-proto"] || "http"
-    : window.location.protocol.slice(0, -1);
-  return `${proto}://${host}${path}`;
-};
-
-FormPage.getInitialProps = async ({ req }: NextPageContext) => {
-  const res = await fetch(apiUrl("/api/captcha", req));
-  const captcha = await res.json();
-
-  return {
-    captcha
-  };
 };
 
 export default FormPage;
