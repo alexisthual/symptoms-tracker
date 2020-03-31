@@ -119,6 +119,6 @@
   "about.credits.content": "Les données sont stockées à titre gracieux par <ascalingo>Scalingo</ascalingo>. L'application est déployée avec <azeit>Zeit Now</azeit>, utilise le thème <aspectre>Spectre</aspectre> et une icone réalisée par <afreepik>Freepik</afreepik> sur <aflaticon>flaticon.com</aflaticon>",
   "about.contributors.title": "Contributions",
   "share.title": "Partager sur les réseaux sociaux ",
-  "share.url": "https://symptoms-tracker.now.sh/",
+  "share.url": "https://coronastatus.fr",
   "share.quote": "Aidez-nous à estimer et prédire la propagation du COVID-19 en France en remplissant ce questionnaire."
 }

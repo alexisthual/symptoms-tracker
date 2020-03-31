@@ -17,12 +17,13 @@ interface IShareProps {
 const Share = ({ messages }: IShareProps) => {
   const intl = useIntl();
   const ShareUrl = intl.formatMessage(messages.share.url);
+
   const ShareButton = (shareMedia: string, shareUrl: string = ShareUrl) => {
     shareUrl ? null : (shareMedia = null);
     switch (shareMedia) {
       case "facebook":
         return (
-          <div className="social-media inline-flex">
+          <div className="social-media">
             <FacebookShareButton
               url={shareUrl}
               quote={messages.share["share.quote"]}
@@ -34,7 +35,7 @@ const Share = ({ messages }: IShareProps) => {
         );
       case "twitter":
         return (
-          <div className="social-media inline-flex">
+          <div className="social-media">
             <TwitterShareButton url={shareUrl} className="twitter-button">
               <TwitterIcon size={32} round />
             </TwitterShareButton>
@@ -42,7 +43,7 @@ const Share = ({ messages }: IShareProps) => {
         );
       case "linkedin":
         return (
-          <div className="social-media inline-flex">
+          <div className="social-media">
             <LinkedinShareButton url={shareUrl} className="linkedin-button">
               <LinkedinIcon size={32} round />
             </LinkedinShareButton>
@@ -50,7 +51,7 @@ const Share = ({ messages }: IShareProps) => {
         );
       case "whatsapp":
         return (
-          <div className="social-media inline-flex">
+          <div className="social-media">
             <WhatsappShareButton url={shareUrl} className="whatsapp-button">
               <WhatsappIcon size={32} round />
             </WhatsappShareButton>
@@ -61,7 +62,7 @@ const Share = ({ messages }: IShareProps) => {
     }
   };
   return (
-    <div className="container grid-xs text-justify">
+    <div className="share container grid-xs text-justify">
       <div className="flex-centered">
         <h6>
           <FormattedMessage id="share.title" />

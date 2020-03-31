@@ -178,7 +178,7 @@ const FormPage = ({ language }: any) => {
   const [immuno, updateImmuno] = useState();
   const [immunoSuppressor, updateImmunoSuppressor] = useState();
 
-  const [modalActive, updateModalActive] = useState(false);
+  const [modalActive, updateModalActive] = useState(true);
   const [alreadySent, updateAlreadySent] = useState(false);
   const [submissionStatus, updateSubmissionStatus] = useState(null);
   const [canSubmit, updateCanSubmit] = useState(false);
@@ -775,8 +775,11 @@ const FormPage = ({ language }: any) => {
               <i className="icon icon-search"></i>{" "}
               <FormattedMessage id="modal.visualise" />
             </button>
+
+            <div className="p-centered p-2">
+              <Share messages={messages} />
+            </div>
           </div>
-          <Share messages={messages}></Share>
         </div>
         <Footer />
       </div>
