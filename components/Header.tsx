@@ -1,7 +1,11 @@
 import Link from "next/link";
 import { FormattedMessage } from "react-intl";
 
-const Header = ({ language }: any) => (
+interface IHeaderProps {
+  language?: string;
+}
+
+const Header = ({}: IHeaderProps) => (
   <>
     <div className="disclaimer bg-primary py-2">
       <div className="container grid-lg">
@@ -34,11 +38,7 @@ const Header = ({ language }: any) => (
           </button>
         </Link>
       </section>
-      <section className="navbar-section px-2">
-        <a href="#" className="btn btn-link">
-          <i className="icon icon-location"></i> {language}
-        </a>
-      </section>
+      <section className="navbar-section px-2"></section>
     </div>
   </>
 );
