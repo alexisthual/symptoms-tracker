@@ -1,5 +1,5 @@
+import fetch from "isomorphic-unfetch";
 import Head from "next/head";
-import Link from "next/link";
 import { useState, useEffect } from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
@@ -50,13 +50,15 @@ const messages = defineMessages({
     recoveredSince: { id: "recoveredSince.placeholder" },
     height: { id: "height.placeholder" },
     weight: { id: "weight.placeholder" },
-    confinedWith: { id: "confinedWith.placeholder" }
+    confinedWith: { id: "confinedWith.placeholder" },
+    captcha: { id: "captcha.placeholder" }
   },
   optional: { id: "optional" },
   share: {
     url: { id: "share.url" },
     quote: { id: "share.quote" }
-  }
+  },
+  verification: { id: "verification" }
 });
 
 interface ISubmitButtonProps {
@@ -79,7 +81,14 @@ const SubmitButton = ({ alreadySent, disabled }: ISubmitButtonProps) =>
     </button>
   );
 
-const FormPage = ({ language }: any) => {
+interface IFormPageProps {
+  captcha: {
+    id: string;
+    data: any;
+  };
+}
+
+const FormPage = ({ captcha }: IFormPageProps) => {
   const intl = useIntl();
 
   const addSymptomOkEffect = (value, valueSince, updateValueOk, states) => {
@@ -178,7 +187,9 @@ const FormPage = ({ language }: any) => {
   const [immuno, updateImmuno] = useState();
   const [immunoSuppressor, updateImmunoSuppressor] = useState();
 
-  const [modalActive, updateModalActive] = useState(true);
+  const [captchaAnswer, updateCaptchaAnswer] = useState("");
+
+  const [modalActive, updateModalActive] = useState(false);
   const [alreadySent, updateAlreadySent] = useState(false);
   const [submissionStatus, updateSubmissionStatus] = useState(null);
   const [canSubmit, updateCanSubmit] = useState(false);
@@ -193,7 +204,8 @@ const FormPage = ({ language }: any) => {
       confinedWith !== "" &&
       confinedWith !== undefined &&
       confinedWith !== null &&
-      health;
+      health &&
+      captchaAnswer.length === 4;
 
     switch (health) {
       case healthStates.ILL:
@@ -242,7 +254,8 @@ const FormPage = ({ language }: any) => {
     throatOk,
     diarrheaOk,
     feedingOk,
-    breathingOk
+    breathingOk,
+    captchaAnswer
   ]);
 
   const sendSubmission = async (event: any) => {
@@ -272,42 +285,48 @@ const FormPage = ({ language }: any) => {
       fetch("/api/submission", {
         method: "POST",
         body: JSON.stringify({
-          submittedAt: blurredNow(15),
-          age,
-          zipcode,
-          confinedWith,
-          health,
-          recoveredSince,
-          // Symptoms
-          fever,
-          feverSince,
-          cough,
-          coughSince,
-          tasteAndSmell,
-          tasteAndSmellSince,
-          headache,
-          headacheSince,
-          throat,
-          throatSince,
-          diarrhea,
-          diarrheaSince,
-          feeding,
-          feedingSince,
-          breathing,
-          breathingSince,
-          // Optional questions
-          covidTest,
-          covidResult,
-          bmi: getBMI(weight, height),
-          hypertension,
-          diabetes,
-          cancer,
-          pneumo,
-          dialyse,
-          liver,
-          pregnant,
-          immuno,
-          immunoSuppressor
+          captcha: {
+            id: captcha.id,
+            answer: captchaAnswer
+          },
+          submission: {
+            submittedAt: blurredNow(15),
+            age,
+            zipcode,
+            confinedWith,
+            health,
+            recoveredSince,
+            // Symptoms
+            fever,
+            feverSince,
+            cough,
+            coughSince,
+            tasteAndSmell,
+            tasteAndSmellSince,
+            headache,
+            headacheSince,
+            throat,
+            throatSince,
+            diarrhea,
+            diarrheaSince,
+            feeding,
+            feedingSince,
+            breathing,
+            breathingSince,
+            // Optional questions
+            covidTest,
+            covidResult,
+            bmi: getBMI(weight, height),
+            hypertension,
+            diabetes,
+            cancer,
+            pneumo,
+            dialyse,
+            liver,
+            pregnant,
+            immuno,
+            immunoSuppressor
+          }
         }),
         headers: {
           "Content-Type": "application/json"
@@ -317,7 +336,7 @@ const FormPage = ({ language }: any) => {
           return response.json();
         })
         .then((result: any) => {
-          switch (result.message) {
+          switch (result.status) {
             case "success":
               updateSubmissionStatus("success");
               break;
@@ -343,7 +362,7 @@ const FormPage = ({ language }: any) => {
         <title>Corona Status</title>
       </Head>
 
-      <Header language={language} />
+      <Header />
 
       <div className="container grid-xs">
         <form onSubmit={sendSubmission}>
@@ -684,6 +703,37 @@ const FormPage = ({ language }: any) => {
                 </div>
               </>
             ) : null}
+
+            <div
+              className="divider text-center"
+              data-content={intl.formatMessage(messages.verification)}
+            ></div>
+
+            <div className="timeline-item">
+              <FormIcon
+                condition={captchaAnswer.length === 4}
+                optional={false}
+              />
+              <div className="timeline-content">
+                <div className="form-group">
+                  <label className="form-label">
+                    <FormattedMessage id="captcha.question" />
+                  </label>
+                  <div dangerouslySetInnerHTML={{ __html: captcha.data }}></div>
+                  <input
+                    className="form-input"
+                    type="text"
+                    placeholder={intl.formatMessage(
+                      messages.placeholders.captcha
+                    )}
+                    value={captchaAnswer}
+                    onChange={(event: any) => {
+                      updateCaptchaAnswer(event.target.value);
+                    }}
+                  ></input>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div className="text-right" style={{ marginTop: 40 }}>
@@ -691,16 +741,7 @@ const FormPage = ({ language }: any) => {
           </div>
         </form>
 
-        <div className="footer inline-flex">
-          <Link href="/about">
-            <button className="btn btn-link">
-              <FormattedMessage id="about" />
-            </button>
-          </Link>
-          <a href="https://github.com/alexisthual/symptoms-tracker">
-            <button className="btn btn-link">Github</button>
-          </a>
-        </div>
+        <Footer />
       </div>
 
       <div className="toaster container grid-xs">
@@ -781,15 +822,23 @@ const FormPage = ({ language }: any) => {
             </div>
           </div>
         </div>
-        <Footer />
       </div>
     </>
   );
 };
 
 FormPage.getInitialProps = async () => {
+  const res = await fetch(
+    `${
+      process.env.NODE_ENV === "production"
+        ? "https://symptoms-tracker.now.sh"
+        : "http://localhost:3000"
+    }/api/captcha`
+  );
+  const captcha = await res.json();
+
   return {
-    language: "fr"
+    captcha
   };
 };
 
