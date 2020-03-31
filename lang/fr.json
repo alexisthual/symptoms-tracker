@@ -91,6 +91,9 @@
   "immunoSuppressor": "Vous prenez un traitement immuno-suppresseur",
   "confinedWith.question": "Combien de personnes en plus de vous sont présentes sur votre lieu de confinement ?",
   "confinedWith.placeholder": "Personnes confinées",
+  "captcha.question": "Recopiez le texte ci-dessous",
+  "captcha.placeholder": "Exemple : 8r5T",
+  "verification": "Vérification",
   "send": "Envoyer",
   "sent": "Envoyé !",
   "submission.pending": "Envoi de la réponse...",
@@ -117,5 +120,7 @@
   "about.contact.content": "Pour toute question, demande ou offre d'aide, prendre contact avec <b>alexis.thual [at] gmail [point] com</b>",
   "about.credits.title": "Mentions",
   "about.credits.content": "Les données sont stockées à titre gracieux par <ascalingo>Scalingo</ascalingo>. L'application est déployée avec <azeit>Zeit Now</azeit>, utilise le thème <aspectre>Spectre</aspectre> et une icone réalisée par <afreepik>Freepik</afreepik> sur <aflaticon>flaticon.com</aflaticon>",
-  "about.contributors.title": "Contributions"
+  "about.contributors.title": "Contributions",
+  "about.coronastatus.community": "Ce site contribue également à un projet plus large de collecte de données à l'échelle planétaire, connu sous le nom de Corona Status. Ce projet est ouvert à toutes et à tous.",
+  "about.coronastatus.link": "En savoir plus sur le projet Corona Status."
 }
