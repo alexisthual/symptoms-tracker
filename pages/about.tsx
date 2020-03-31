@@ -142,6 +142,13 @@ const AboutPage = ({ language }: any) => {
           </li>
         </ul>
 
+        <p>
+          <FormattedMessage id="about.coronastatus.community" />{" "}
+          <a href="https://coronastatus.fr">
+            <FormattedMessage id="about.coronastatus.link" />
+          </a>
+        </p>
+
         <Footer />
       </div>
     </>
