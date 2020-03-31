@@ -16,7 +16,13 @@ const Footer = () => {
           </Link>
         );
       default:
-        return;
+        return (
+          <Link href="/about">
+            <button className="btn btn-link">
+              <FormattedMessage id="about" />
+            </button>
+          </Link>
+        );
     }
   };
 
