@@ -15,7 +15,8 @@ interface IShareProps {
 }
 
 const Share = ({ messages }: IShareProps) => {
-  const ShareUrl = messages.share.url;
+  const intl = useIntl();
+  const ShareUrl = intl.formatMessage(messages.share.url);
   const ShareButton = (shareMedia: string, shareUrl: string = ShareUrl) => {
     shareUrl ? null : (shareMedia = null);
     switch (shareMedia) {
