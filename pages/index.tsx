@@ -3,6 +3,7 @@ import Link from "next/link";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 import Footer from "../components/Footer";
+import Share from "../components/Share";
 import Header from "../components/Header";
 
 import "spectre.css/dist/spectre.min.css";
@@ -11,7 +12,11 @@ import "spectre.css/dist/spectre-icons.min.css";
 import "../style.scss";
 
 const messages = defineMessages({
-  about: { id: "about" }
+  about: { id: "about" },
+  share: {
+    url: { id: "share.url" },
+    quote: { id: "share.quote" }
+  }
 });
 
 const IndexPage = ({ language }: any) => {
@@ -51,7 +56,7 @@ const IndexPage = ({ language }: any) => {
             </button>
           </Link>
         </p>
-
+        <Share messages={messages}></Share>
         <Footer />
       </div>
     </>
