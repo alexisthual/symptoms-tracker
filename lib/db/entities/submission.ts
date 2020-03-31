@@ -32,7 +32,10 @@ export class Submission {
   age: ageCategories;
 
   // TODO: this won't be true for countries like UK, Canada
-  @Column("integer")
+  @Column({
+    type: "integer",
+    nullable: true
+  })
   zipcode: number;
 
   @Column("integer")

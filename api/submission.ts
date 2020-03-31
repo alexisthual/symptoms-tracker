@@ -18,35 +18,30 @@ module.exports = async (req: NowRequest, res: NowResponse) => {
         .then((captcha: Captcha) => {
           if (captcha.text === req.body.captcha.answer) {
             const zipcode = req.body.submission.zipcode;
-            if (zipcode.toString() in zipcodes) {
-              const submissionRepository = connection.getRepository(Submission);
+            const submissionRepository = connection.getRepository(Submission);
 
-              submissionRepository
-                .save({
-                  // Blur zipcode
-                  ...req.body.submission,
-                  zipcode: Number(zipcodes[zipcode])
-                })
-                .then(() => {
-                  res.status(200).json({
-                    status: "success"
-                  });
-                })
-                .catch((error: any) => {
-                  console.log(error);
-                  res.status(500).json({
-                    status: "error",
-                    message: "Could not write submission",
-                    error
-                  });
+            submissionRepository
+              .save({
+                // Blur zipcode
+                ...req.body.submission,
+                zipcode:
+                  zipcode.toString() in zipcode
+                    ? Number(zipcodes[zipcode])
+                    : null
+              })
+              .then(() => {
+                res.status(200).json({
+                  status: "success"
                 });
-            } else {
-              console.log("Zipcode not found in json");
-              res.status(200).json({
-                status: "error",
-                message: "Zipcode is not valid."
+              })
+              .catch((error: any) => {
+                console.log(error);
+                res.status(500).json({
+                  status: "error",
+                  message: "Could not write submission",
+                  error
+                });
               });
-            }
           } else {
             console.log(
               `Invalid Captcha answer: ${captcha.text} (truth) !== ${req.body.captcha.answer} (submission)`

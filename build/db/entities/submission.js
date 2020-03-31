@@ -43,7 +43,16 @@ var Submission = /** @class */ (function() {
     Submission.prototype,
     "age"
   );
-  __decorate([typeorm_1.Column("integer")], Submission.prototype, "zipcode");
+  __decorate(
+    [
+      typeorm_1.Column({
+        type: "integer",
+        nullable: true
+      })
+    ],
+    Submission.prototype,
+    "zipcode"
+  );
   __decorate(
     [typeorm_1.Column("integer")],
     Submission.prototype,
