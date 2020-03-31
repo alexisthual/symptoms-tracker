@@ -91,6 +91,9 @@
   "immunoSuppressor": "Vous prenez un traitement immuno-suppresseur",
   "confinedWith.question": "Combien de personnes en plus de vous sont présentes sur votre lieu de confinement ?",
   "confinedWith.placeholder": "Personnes confinées",
+  "captcha.question": "Recopiez le texte ci-dessous",
+  "captcha.placeholder": "Exemple : 8r5T",
+  "verification": "Vérification",
   "send": "Envoyer",
   "sent": "Envoyé !",
   "submission.pending": "Envoi de la réponse...",
@@ -120,5 +123,7 @@
   "about.contributors.title": "Contributions",
   "share.title": "Partager sur les réseaux sociaux ",
   "share.url": "https://coronastatus.fr",
-  "share.quote": "Aidez-nous à estimer et prédire la propagation du COVID-19 en France en remplissant ce questionnaire."
+  "share.quote": "Aidez-nous à estimer et prédire la propagation du COVID-19 en France en remplissant ce questionnaire.",
+  "about.coronastatus.community": "Ce site contribue également à un projet plus large de collecte de données à l'échelle planétaire, connu sous le nom de Corona Status. Ce projet est ouvert à toutes et à tous.",
+  "about.coronastatus.link": "En savoir plus sur le projet Corona Status."
 }
