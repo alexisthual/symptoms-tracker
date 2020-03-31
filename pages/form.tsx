@@ -829,6 +829,8 @@ const FormPage = ({ captcha }: IFormPageProps) => {
 };
 
 FormPage.getInitialProps = async (context: NextPageContext) => {
+  console.log(context);
+
   const baseUrl =
     process.env.NODE_ENV === "production"
       ? `https://${context.req.headers.host}`
