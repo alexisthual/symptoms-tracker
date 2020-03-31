@@ -13,8 +13,6 @@ module.exports = async (req: NowRequest, res: NowResponse) => {
       noise: 3
     });
 
-    console.log(captcha.text);
-
     const captchaRepository = connection.getRepository(Captcha);
     captchaRepository
       .save({
