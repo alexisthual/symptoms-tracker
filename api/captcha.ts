@@ -10,8 +10,7 @@ module.exports = async (req: NowRequest, res: NowResponse) => {
     var captcha = svgCaptcha.create({
       size: 4,
       ignoreChars: "0oO1iLl",
-      noise: 3,
-      color: true
+      noise: 3
     });
 
     console.log(captcha.text);
