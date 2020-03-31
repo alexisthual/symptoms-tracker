@@ -20,6 +20,8 @@ import {
 import FormIcon from "../components/FormIcon";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import Share from "../components/Share";
+
 import MedicalHistoryCheckbox from "../components/MedicalHistoryCheckbox";
 import NumberInput from "../components/NumberInput";
 import SymptomInput from "../components/SymptomInput";
@@ -50,7 +52,11 @@ const messages = defineMessages({
     weight: { id: "weight.placeholder" },
     confinedWith: { id: "confinedWith.placeholder" }
   },
-  optional: { id: "optional" }
+  optional: { id: "optional" },
+  share: {
+    url: { id: "share.url" },
+    quote: { id: "share.quote" }
+  }
 });
 
 interface ISubmitButtonProps {
@@ -770,8 +776,8 @@ const FormPage = ({ language }: any) => {
               <FormattedMessage id="modal.visualise" />
             </button>
           </div>
+          <Share messages={messages}></Share>
         </div>
-
         <Footer />
       </div>
     </>
