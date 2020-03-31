@@ -1,5 +1,4 @@
 import fetch from "isomorphic-unfetch";
-import { NextPageContext } from "next";
 import Head from "next/head";
 import { useState, useEffect } from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
@@ -828,12 +827,10 @@ const FormPage = ({ captcha }: IFormPageProps) => {
   );
 };
 
-FormPage.getInitialProps = async (context: NextPageContext) => {
-  console.log(context);
-
+FormPage.getInitialProps = async () => {
   const baseUrl =
     process.env.NODE_ENV === "production"
-      ? `https://${context.req.headers.host}`
+      ? "https://coronavirus.fr"
       : "http://localhost:3000";
 
   const res = await fetch(`${baseUrl}/api/captcha`);
