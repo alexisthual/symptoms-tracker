@@ -25,7 +25,7 @@ module.exports = async (req: NowRequest, res: NowResponse) => {
                 // Blur zipcode
                 ...req.body.submission,
                 zipcode:
-                  zipcode.toString() in zipcode
+                  zipcode.toString() in zipcodes
                     ? Number(zipcodes[zipcode])
                     : null
               })

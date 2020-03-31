@@ -1,7 +1,7 @@
 {
   "title": "Corona Status",
   "disclaimer": "Ce site est une initiative personnelle et ne livre pas d'avis médical. Ce questionnaire vise à faciliter le suivi du développement des cas réels du COVID-19 au sein des populations confinées. Aucune donnée personnelle ou identifiante n'est collectée.",
-  "support": "Aidez-nous à estimer et prédire la propagation du COVID-19 en France en remplissant ce questionnaire.",
+  "support": "Aidez-nous à estimer et prédire la propagation du COVID-19 en France en remplissant ce questionnaire. <b>Votre réponse est utile même si vous n'êtes pas malade</b>.",
   "takesurvey": "Remplir le questionnaire",
   "usage": "Aucune donnée personnelle ou identifiante n'est collectée. L'ensemble des résultats est publiquement accessible.",
   "knowmore": "En savoir plus",
@@ -29,7 +29,7 @@
   "covid.result.PENDING": "En attente de résultat",
   "health.question": "Vous êtes actuellement : ",
   "health.WELL": "Bien portant·e",
-  "health.RECOVERED": "Rétabli·e récemment",
+  "health.RECOVERED": "Rétabli·e récemment (de maux s'apparentant à un syndrome grippal, rhume, covid-19 ou autre)",
   "health.ILL": "Souffrant·e",
   "recoveredSince.question": "Depuis combien de jours ?",
   "recoveredSince.placeholder": "Rétablissement",

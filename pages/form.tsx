@@ -120,8 +120,8 @@ const FormPage = () => {
   };
 
   const [age, updateAge] = useState();
-  const [zipcode, updateZipcode] = useState();
-  const [confinedWith, updateConfinedWith] = useState();
+  const [zipcode, updateZipcode] = useState("");
+  const [confinedWith, updateConfinedWith] = useState("");
   const [covidTest, updateCovidTest] = useState();
   const [covidResult, updateCovidResult] = useState();
   const [health, updateHealth] = useState();

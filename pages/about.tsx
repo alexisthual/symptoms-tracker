@@ -138,7 +138,9 @@ const AboutPage = ({ language }: any) => {
             <a href="https://twitter.com/revolunet">@revolunet</a>
           </li>
           <li>
-            <a href="https://twitter.com/R_BertrandLalo">@R_BertrandLalo</a>
+            <a href="https://www.linkedin.com/in/raphaëlle-bertrand-lalo-185679b9/">
+              Raphaëlle Bertrand-Lalo
+            </a>
           </li>
         </ul>
 
