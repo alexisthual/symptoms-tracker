@@ -18,7 +18,7 @@
   "age.SENIOR": "50-69 ans",
   "age.ELDERLY": "70 ans et plus",
   "zipcode.question": "Code postal de votre lieu de confinement",
-  "zipcode.placeholder": "12345",
+  "zipcode.placeholder": "94130",
   "zipcode.invalid": "Le code postal est incorrect",
   "covid.test.question": "Avez-vous passé un test COVID-19 ?",
   "covid.test.YES": "Oui",
