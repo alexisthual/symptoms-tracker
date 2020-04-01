@@ -146,7 +146,7 @@ const AboutPage = ({ language }: any) => {
 
         <p>
           <FormattedMessage id="about.coronastatus.community" />{" "}
-          <a href="https://coronastatus.fr">
+          <a href="https://github.com/BustByte/coronastatus">
             <FormattedMessage id="about.coronastatus.link" />
           </a>
         </p>
