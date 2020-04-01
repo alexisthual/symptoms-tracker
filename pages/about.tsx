@@ -138,9 +138,18 @@ const AboutPage = ({ language }: any) => {
             <a href="https://twitter.com/revolunet">@revolunet</a>
           </li>
           <li>
-            <a href="https://twitter.com/R_BertrandLalo">@R_BertrandLalo</a>
+            <a href="https://www.linkedin.com/in/raphaëlle-bertrand-lalo-185679b9/">
+              Raphaëlle Bertrand-Lalo
+            </a>
           </li>
         </ul>
+
+        <p>
+          <FormattedMessage id="about.coronastatus.community" />{" "}
+          <a href="https://coronastatus.fr">
+            <FormattedMessage id="about.coronastatus.link" />
+          </a>
+        </p>
 
         <Footer />
       </div>

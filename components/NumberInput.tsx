@@ -22,7 +22,12 @@ const NumberInput = ({
   return (
     <div className="timeline-item">
       <FormIcon
-        condition={value !== undefined && value !== null && value !== ""}
+        condition={
+          value !== undefined &&
+          value !== null &&
+          value !== "" &&
+          Number(value) >= 0
+        }
         optional={optional}
       />
       <div className="timeline-content">
@@ -33,7 +38,6 @@ const NumberInput = ({
           <input
             type="number"
             className="form-input"
-            min="0"
             placeholder={intl.formatMessage(messages.placeholders[name])}
             value={value}
             onChange={(event: any) => {

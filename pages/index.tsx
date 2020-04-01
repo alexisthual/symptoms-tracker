@@ -32,7 +32,12 @@ const IndexPage = ({ language }: any) => {
 
       <div className="container grid-xs text-justify">
         <p>
-          <FormattedMessage id="support" />
+          <FormattedMessage
+            id="support"
+            values={{
+              b: (...chunks: any) => <b>{chunks}</b>
+            }}
+          />
         </p>
 
         <p>
