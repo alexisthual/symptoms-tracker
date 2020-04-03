@@ -78,8 +78,7 @@ const SubmitButton = ({
   alreadySent ? (
     <button className="btn btn-primary btn-lg" disabled>
       <i
-        className={`icon ${submissionStatus == "success" ? "icon-check" : ""}
-                         ${submissionStatus == "pending" ? "loading" : ""}`}
+        className={`icon ${submissionStatus == "success" ? "icon-check" : ""}`}
       ></i>{" "}
       <FormattedMessage
         id={`${submissionStatus == "success" ? "sent" : "send"}`}
@@ -88,7 +87,9 @@ const SubmitButton = ({
   ) : (
     <button
       type="submit"
-      className="btn btn-primary btn-lg"
+      className={`btn btn-primary btn-lg ${
+        submissionStatus == "pending" ? "loading" : ""
+      }`}
       disabled={disabled}
     >
       <FormattedMessage id="send" />
