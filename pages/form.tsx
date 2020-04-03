@@ -280,7 +280,6 @@ const FormPage = () => {
     };
 
     if (canSubmit) {
-      updateModalActive(true);
       updateAlreadySent(true);
       updateSubmissionStatus("pending");
 
@@ -348,6 +347,7 @@ const FormPage = () => {
           return response.json();
         })
         .then((result: any) => {
+          updateModalActive(true);
           switch (result.status) {
             case "success":
               updateSubmissionStatus("success");
