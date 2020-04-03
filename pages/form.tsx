@@ -66,13 +66,23 @@ const messages = defineMessages({
 
 interface ISubmitButtonProps {
   alreadySent: boolean;
+  submissionStatus: string;
   disabled: boolean;
 }
 
-const SubmitButton = ({ alreadySent, disabled }: ISubmitButtonProps) =>
+const SubmitButton = ({
+  alreadySent,
+  submissionStatus,
+  disabled
+}: ISubmitButtonProps) =>
   alreadySent ? (
     <button className="btn btn-primary btn-lg" disabled>
-      <i className="icon icon-check"></i> <FormattedMessage id="sent" />
+      <i
+        className={`icon ${submissionStatus == "success" ? "icon-check" : ""}`}
+      ></i>{" "}
+      <FormattedMessage
+        id={`${submissionStatus == "success" ? "sent" : "send"}`}
+      />
     </button>
   ) : (
     <button
@@ -749,7 +759,11 @@ const FormPage = () => {
           </div>
 
           <div className="text-right" style={{ marginTop: 40 }}>
-            <SubmitButton alreadySent={alreadySent} disabled={!canSubmit} />
+            <SubmitButton
+              alreadySent={alreadySent}
+              disabled={!canSubmit}
+              submissionStatus={submissionStatus}
+            />
           </div>
         </form>
 
@@ -795,44 +809,67 @@ const FormPage = () => {
               }}
             ></a>
             <div className="modal-title h5">
-              <FormattedMessage id="modal.title" />
+              <FormattedMessage id={`modal.title.${submissionStatus}`} />
             </div>
           </div>
-          <div className="modal-body">
-            <div className="content text-justify">
-              <FormattedMessage id="modal.content" />
-              <ul>
-                <li>
-                  <FormattedMessage id="modal.content.list.0" />
-                </li>
-                <li>
-                  <FormattedMessage id="modal.content.list.1" />
-                </li>
-                <li>
-                  <FormattedMessage id="modal.content.list.2" />
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div className="modal-footer inline-flex">
-            <button
-              className="btn btn-primary"
-              onClick={() => {
-                location.reload();
-              }}
-            >
-              <i className="icon icon-refresh"></i>{" "}
-              <FormattedMessage id="modal.retake" />
-            </button>
-            <button className="btn disabled">
-              <i className="icon icon-search"></i>{" "}
-              <FormattedMessage id="modal.visualise" />
-            </button>
 
-            <div className="p-centered p-2">
-              <Share messages={messages} />
+          {submissionStatus === "success" ? (
+            <div className="modal-body">
+              <div className="content text-justify">
+                <FormattedMessage id="modal.content.success" />
+                <ul>
+                  <li>
+                    <FormattedMessage id="modal.content.success.list.0" />
+                  </li>
+                  <li>
+                    <FormattedMessage id="modal.content.success.list.1" />
+                  </li>
+                  <li>
+                    <FormattedMessage id="modal.content.success.list.2" />
+                  </li>
+                </ul>
+              </div>
             </div>
-          </div>
+          ) : null}
+          {submissionStatus === "error" ? (
+            <div className="content text-justify">
+              <FormattedMessage id="modal.content.error" />
+            </div>
+          ) : null}
+          {submissionStatus === "success" ? (
+            <div className="modal-footer inline-flex">
+              <button
+                className="btn btn-primary"
+                onClick={() => {
+                  location.reload();
+                }}
+              >
+                <i className="icon icon-refresh"></i>{" "}
+                <FormattedMessage id="modal.retake" />
+              </button>
+              <button className="btn disabled">
+                <i className="icon icon-search"></i>{" "}
+                <FormattedMessage id="modal.visualise" />
+              </button>
+
+              <div className="p-centered p-2">
+                <Share messages={messages} />
+              </div>
+            </div>
+          ) : null}
+          {submissionStatus === "error" ? (
+            <div className="modal-footer inline-flex">
+              <button
+                className="btn btn-primary"
+                onClick={() => {
+                  location.reload();
+                }}
+              >
+                <i className="icon icon-refresh"></i>{" "}
+                <FormattedMessage id="modal.retry" />
+              </button>
+            </div>
+          ) : null}
         </div>
       </div>
     </>
