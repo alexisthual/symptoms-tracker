@@ -71,7 +71,7 @@ var Submission = /** @class */ (function() {
   __decorate(
     [
       typeorm_1.Column({
-        type: "smallint",
+        type: "integer",
         nullable: true
       })
     ],
