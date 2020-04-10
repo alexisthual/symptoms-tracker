@@ -15,10 +15,13 @@ module.exports = async (req: NowRequest, res: NowResponse) => {
 
       captchaRepository
         .findOne(req.body.captcha.id)
-        .then((captcha: Captcha) => {
+        .then(async (captcha: Captcha) => {
           if (captcha.text === req.body.captcha.answer) {
             const zipcode = req.body.submission.zipcode;
             const submissionRepository = connection.getRepository(Submission);
+
+            // Delete captcha to prevent it from being used several times
+            await captchaRepository.remove(captcha);
 
             submissionRepository
               .save({
