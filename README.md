@@ -40,6 +40,12 @@ next dev
 docker-compose up
 ```
 
+When instanciating this db for the first time, you should create all tables etc using
+
+```
+yarn run typeorm schema:sync
+```
+
 ### Create or generate migrations
 
 Requirements:
