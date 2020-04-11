@@ -288,14 +288,13 @@ const FormPage = () => {
       updateAlreadySent(true);
       updateSubmissionStatus("pending");
 
-      // Returns current datetime +- m minutes.
-      // The "randomness" range is thus 2 * m.
-      const blurredNow = (m: number) => {
-        const randomMinutes = 2 * (Math.random() - 0.5) * m * 60 * 1000;
-        const submissionDatetime = new Date(Date.now() + randomMinutes);
-        submissionDatetime.setSeconds(0);
-        submissionDatetime.setMilliseconds(0);
-        return new Date(submissionDatetime);
+      const currentDate = () => {
+        const date = new Date(Date.now());
+        date.setHours(0);
+        date.setMinutes(0);
+        date.setSeconds(0);
+        date.setMilliseconds(0);
+        return new Date(date);
       };
 
       fetch("/api/submission", {
@@ -306,7 +305,7 @@ const FormPage = () => {
             answer: captchaAnswer
           },
           submission: {
-            submittedAt: blurredNow(15),
+            submittedAt: currentDate(),
             age,
             zipcode,
             confinedWith,
