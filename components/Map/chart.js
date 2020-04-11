@@ -1,4 +1,8 @@
-import * as d3 from 'd3';
+import { geoPath, geoConicConformal } from 'd3-geo';
+import { scaleLinear, scaleQuantile } from 'd3-scale';
+import { axisLeft } from 'd3-axis';
+import { select, selectAll, mouse } from 'd3-selection';
+import { max, min, range } from 'd3-array';
 
 const colors = [
   '#FF5200', // Not enough answers
@@ -81,18 +85,16 @@ export const createChart = async ({ id, geojson, csv }) => {
   const width = document.getElementById(id).offsetWidth * 0.95;
   const height = 550;
 
-  const path = d3.geoPath();
+  const path = geoPath();
 
-  const projection = d3
-    .geoConicConformal() // Lambert-93
+  const projection = geoConicConformal() // Lambert-93
     .center([2.454071, 46.279229]) // Center on France
     .scale(2000)
     .translate([width / 2, height / 2]);
 
   path.projection(projection);
 
-  const svg = d3
-    .select(`#${id}`)
+  const svg = select(`#${id}`)
     .append('svg')
     .attr('id', 'svg')
     .attr('width', width)
@@ -110,17 +112,16 @@ export const createChart = async ({ id, geojson, csv }) => {
     .attr('id', d => `code-${d.properties.code}`)
     .attr('d', path);
 
-  var quantile = d3
-    .scaleQuantile()
-    .domain([0, d3.max(csv, e => e.TOTAL)])
-    .range(d3.range(colors.length));
+  var quantile = scaleQuantile()
+    .domain([0, max(csv, e => e.TOTAL)])
+    .range(range(colors.length));
 
   // Create the legend
   var legend = svg.append('g').attr('transform', 'translate(550, 100)');
 
   legend
     .selectAll()
-    .data(d3.range(colors.length))
+    .data(range(colors.length))
     .enter()
     .append('svg:rect')
     .attr('height', LEGEND_SIZE + 'px')
@@ -130,23 +131,22 @@ export const createChart = async ({ id, geojson, csv }) => {
     .style('fill', d => colors[d]);
 
   // Create the legend scale
-  const min = d3.min(csv, e => e.TOTAL);
-  const max = d3.max(csv, e => e.TOTAL);
-  var legendScale = d3
-    .scaleLinear()
-    .domain([min, max])
+  const minLegend = min(csv, e => e.TOTAL);
+  const maxLegend = max(csv, e => e.TOTAL);
+  var legendScale = scaleLinear()
+    .domain([minLegend, maxLegend])
     .range([0, colors.length * LEGEND_SIZE]);
 
   const legendAxis = legend
     .append('g')
     .attr('class', 'axis')
-    .call(d3.axisLeft(legendScale));
+    .call(axisLeft(legendScale));
 
   const tooltip = addTooltip(svg);
 
   csv.forEach(function(e, i) {
     const { CODE, TOTAL, REGION } = e;
-    const region = d3.select(`#code-${CODE}`);
+    const region = select(`#code-${CODE}`);
     const answersPercentage = TOTAL;
     const regionColor = colors[quantile(answersPercentage)];
     region
@@ -168,13 +168,13 @@ export const createChart = async ({ id, geojson, csv }) => {
     });
 
     region.on('mousemove', function() {
-      var mouse = d3.mouse(this);
-      tooltip.attr('transform', 'translate(' + mouse[0] + ',' + (mouse[1] - 75) + ')');
+      var [x, y] = mouse(this);
+      tooltip.attr('transform', 'translate(' + x + ',' + (y - 75) + ')');
     });
   });
 
-  d3.select('select').on('change', function() {
-    d3.selectAll('svg').attr('class', this.value);
+  select('select').on('change', function() {
+    selectAll('svg').attr('class', this.value);
   });
 
   return Promise.resolve();
