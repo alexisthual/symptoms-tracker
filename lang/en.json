@@ -28,5 +28,6 @@
   "send": "Send",
   "sent": "Sent!",
   "about": "About",
-  "home": "Home"
+  "home": "Home",
+  "home.total.submission": "Number total of submissions:"
 }

@@ -129,5 +129,6 @@
   "about.coronastatus.link": "En savoir plus sur le projet Corona Status.",
   "share.title": "Partager sur les réseaux sociaux ",
   "share.url": "https://coronastatus.fr",
-  "share.quote": "Aidez-nous à estimer et prédire la propagation du COVID-19 en France en remplissant ce questionnaire."
+  "share.quote": "Aidez-nous à estimer et prédire la propagation du COVID-19 en France en remplissant ce questionnaire.",
+  "home.total.submission": "Nombre total de submissions :"
 }
