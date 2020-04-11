@@ -16,7 +16,10 @@ module.exports = async (req: NowRequest, res: NowResponse) => {
       captchaRepository
         .findOne(req.body.captcha.id)
         .then(async (captcha: Captcha) => {
-          if (captcha.text === req.body.captcha.answer) {
+          if (
+            captcha.text.toLocaleLowerCase() ===
+            req.body.captcha.answer.toLocaleLowerCase()
+          ) {
             const zipcode = req.body.submission.zipcode;
             const submissionRepository = connection.getRepository(Submission);
 
