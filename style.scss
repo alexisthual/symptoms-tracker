@@ -1,3 +1,6 @@
+$modal-h5-color: #ff5200;
+$btn-color: #fe6c27;
+$btn-color-hover: #ff5200;
 $primary-color: #2965cc;
 
 @import "node_modules/spectre.css/src/spectre";
@@ -44,4 +47,17 @@ $primary-color: #2965cc;
   .toast:not(:last-child) {
     margin-bottom: 4px;
   }
+}
+
+.btn.btn-primary {
+  background-color: $btn-color;
+  border-color: $btn-color;
+}
+.btn.btn-primary:hover {
+  background-color: $btn-color-hover;
+  border-color: $btn-color;
+}
+
+.h5 {
+  color: $modal-h5-color;
 }

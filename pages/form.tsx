@@ -206,7 +206,8 @@ const FormPage = () => {
 
   const [captchaAnswer, updateCaptchaAnswer] = useState("");
 
-  const [modalActive, updateModalActive] = useState(false);
+  const [modalIntroActive, updateModalIntroActive] = useState(true);
+  const [modalOutroActive, updateModalOutroActive] = useState(false);
   const [alreadySent, updateAlreadySent] = useState(false);
   const [submissionStatus, updateSubmissionStatus] = useState(null);
   const [canSubmit, updateCanSubmit] = useState(false);
@@ -352,7 +353,7 @@ const FormPage = () => {
           return response.json();
         })
         .then((result: any) => {
-          updateModalActive(true);
+          updateModalOutroActive(true);
           switch (result.status) {
             case "success":
               updateSubmissionStatus("success");
@@ -802,7 +803,40 @@ const FormPage = () => {
         </div>
       </div>
 
-      <div className={`modal ${modalActive ? "active" : ""}`} id="modal-id">
+      <div
+        className={`modal ${modalIntroActive ? "active" : ""}`}
+        id="modal-id"
+      >
+        <a className="modal-overlay" aria-label="Close"></a>
+        <div className="modal-container">
+          <div className="modal-header">
+            <div className="modal-title h5 flex-centered">
+              <FormattedMessage id={`modal.intro.title`} />
+            </div>
+            <div className="modal-body">
+              <div className="content text-justify">
+                <FormattedMessage id={`modal.intro.content`} />
+              </div>
+            </div>
+            <div className="modal-footer flex-centered">
+              <button
+                className="btn btn-primary"
+                onClick={() => {
+                  updateModalIntroActive(false);
+                }}
+              >
+                <i className="icon"></i>{" "}
+                <FormattedMessage id="modal.intro.understand" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        className={`modal ${modalOutroActive ? "active" : ""}`}
+        id="modal-id"
+      >
         <a className="modal-overlay" aria-label="Close"></a>
         <div className="modal-container">
           <div className="modal-header">
@@ -810,7 +844,7 @@ const FormPage = () => {
               className="btn btn-clear float-right"
               aria-label="Close"
               onClick={() => {
-                updateModalActive(false);
+                updateModalOutroActive(false);
               }}
             ></a>
             <div className="modal-title h5">

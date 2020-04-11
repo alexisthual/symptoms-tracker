@@ -20,7 +20,7 @@ const AboutPage = ({ language }: any) => {
   return (
     <>
       <Head>
-        <title>Symptoms Tracker | {intl.formatMessage(messages.about)}</title>
+        <title>Corona Status | {intl.formatMessage(messages.about)}</title>
       </Head>
       <Header language={language} />
 
