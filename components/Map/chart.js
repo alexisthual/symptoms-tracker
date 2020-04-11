@@ -5,14 +5,14 @@ import { select, selectAll, mouse } from 'd3-selection';
 import { max, min, range } from 'd3-array';
 
 const colors = [
-  '#FF5200', // Not enough answers
-  '#FE6C27',
-  '#FF8044',
-  '#FF8D58',
-  '#FFA87F',
-  '#FEBC9C',
+  '#FFEBE1', // Not enough answers
   '#FFD0BA',
-  '#FFEBE1', // Enough answers
+  '#FEBC9C',
+  '#FFA87F',
+  '#FF8D58',
+  '#FF8044',
+  '#FE6C27',
+  '#FF5200', // Enough answers
 ];
 const LEGEND_HEIGHT = 300;
 const LEGEND_SIZE = Math.ceil(LEGEND_HEIGHT / colors.length);
