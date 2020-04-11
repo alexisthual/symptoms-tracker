@@ -21,7 +21,7 @@ export class Submission {
   readonly id: string;
 
   @Column("timestamp")
-  submittedAt: number;
+  submittedAt: Date;
 
   // DEMOGRAPHIC QUESTIONS
 
