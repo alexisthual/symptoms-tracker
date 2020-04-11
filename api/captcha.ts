@@ -9,7 +9,7 @@ module.exports = async (req: NowRequest, res: NowResponse) => {
     const connection = await connect();
     var captcha = svgCaptcha.create({
       size: 4,
-      ignoreChars: "0oO1iLl",
+      ignoreChars: "0oO1iLlI",
       noise: 3
     });
 
