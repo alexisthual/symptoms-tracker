@@ -8,6 +8,9 @@ import useSWR from "swr";
 
 import {
   ageCategories,
+  alreadyStates,
+  covidContactStates,
+  covidContactTestedStates,
   covidTestStates,
   covidResultStates,
   healthStates,
@@ -137,6 +140,9 @@ const FormPage = () => {
   const [age, updateAge] = useState();
   const [zipcode, updateZipcode] = useState("");
   const [confinedWith, updateConfinedWith] = useState("");
+  const [already, updateAlready] = useState();
+  const [covidContact, updateCovidContact] = useState();
+  const [covidContactTested, updateCovidContactTested] = useState();
   const [covidTest, updateCovidTest] = useState();
   const [covidResult, updateCovidResult] = useState();
   const [health, updateHealth] = useState();
@@ -576,6 +582,97 @@ const FormPage = () => {
               className="divider text-center"
               data-content={intl.formatMessage(messages.optional)}
             ></div>
+
+            <div className="timeline-item">
+              <FormIcon condition={already !== undefined} optional={true} />
+              <div className="timeline-content">
+                <div className="form-group">
+                  <label className="form-label">
+                    <FormattedMessage id={`already.question`} />
+                  </label>
+                  {Object.keys(alreadyStates).map(
+                    (state: string, index: number) => (
+                      <label key={index} className="form-radio">
+                        <input
+                          type="radio"
+                          value={state}
+                          checked={already === state}
+                          onChange={(event: any) => {
+                            updateAlready(event.target.value);
+                          }}
+                        />
+                        <i className="form-icon"></i>{" "}
+                        <FormattedMessage id={`already.${state}`} />
+                      </label>
+                    )
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <div className="timeline-item">
+              <FormIcon
+                condition={covidContact !== undefined}
+                optional={true}
+              />
+              <div className="timeline-content">
+                <div className="form-group">
+                  <label className="form-label">
+                    <FormattedMessage id={`covid.contact.question`} />
+                  </label>
+                  {Object.keys(covidContactStates).map(
+                    (state: string, index: number) => (
+                      <label key={index} className="form-radio">
+                        <input
+                          type="radio"
+                          value={state}
+                          checked={covidContact === state}
+                          onChange={(event: any) => {
+                            updateCovidContact(event.target.value);
+                          }}
+                        />
+                        <i className="form-icon"></i>{" "}
+                        <FormattedMessage id={`covid.contact.${state}`} />
+                      </label>
+                    )
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {covidContact === covidContactStates.YES ? (
+              <div className="timeline-item">
+                <FormIcon
+                  condition={covidContactTested !== undefined}
+                  optional={true}
+                />
+                <div className="timeline-content">
+                  <div className="form-group">
+                    <label className="form-label">
+                      <FormattedMessage id={`covid.contact.tested.question`} />
+                    </label>
+                    {Object.keys(covidContactTestedStates).map(
+                      (state: string, index: number) => (
+                        <label key={index} className="form-radio">
+                          <input
+                            type="radio"
+                            value={state}
+                            checked={covidContactTested === state}
+                            onChange={(event: any) => {
+                              updateCovidContactTested(event.target.value);
+                            }}
+                          />
+                          <i className="form-icon"></i>{" "}
+                          <FormattedMessage
+                            id={`covid.contact.tested.${state}`}
+                          />
+                        </label>
+                      )
+                    )}
+                  </div>
+                </div>
+              </div>
+            ) : null}
 
             <div className="timeline-item">
               <FormIcon condition={covidTest !== undefined} optional={true} />

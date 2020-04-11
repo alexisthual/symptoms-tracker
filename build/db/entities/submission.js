@@ -254,6 +254,42 @@ var Submission = /** @class */ (function() {
     Submission.prototype,
     "breathingSince"
   );
+
+  __decorate(
+    [
+      typeorm_1.Column({
+        type: "enum",
+        enum: types_1.alreadyStates,
+        nullable: true
+      })
+    ],
+    Submission.prototype,
+    "already"
+  );
+
+  __decorate(
+    [
+      typeorm_1.Column({
+        type: "enum",
+        enum: types_1.covidContactStates,
+        nullable: true
+      })
+    ],
+    Submission.prototype,
+    "covidContact"
+  );
+
+  __decorate(
+    [
+      typeorm_1.Column({
+        type: "enum",
+        enum: types_1.covidContactTestedStates,
+        nullable: true
+      })
+    ],
+    Submission.prototype,
+    "covidContactTested"
+  );
   __decorate(
     [
       typeorm_1.Column({
