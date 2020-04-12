@@ -33,7 +33,7 @@ const FranceMap = () => {
   return (
     <>
       <div>
-        <p className="h5 p-centered">
+        <p className="h5 flex-centered">
           {" "}
           <FormattedMessage id="home.map.title" />{" "}
         </p>
@@ -41,7 +41,7 @@ const FranceMap = () => {
           id={mapID}
           style={{ maxWidth: "100%", margin: "0 auto", width: "600px" }}
         />
-        <p className="empty-subtitle">
+        <p className="empty-subtitle flex-centered">
           <FormattedMessage id="home.total.submission" /> {total}
         </p>
       </div>
