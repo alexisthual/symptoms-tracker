@@ -183,17 +183,16 @@ export const createChart = async ({ id, geojson, csv }) => {
 
   //
   csv.forEach(function(e, i) {
-    const { INSEE, TOTAL, REGION, ILL, WELL, RECOVERED } = e;
+    const { INSEE, TOTAL, REGION, ILL, WELL, RECOVERED, TARGET_PERCENT } = e;
     const region = select(`#code-${INSEE}`);
-    const answersPercentage = TOTAL;
-    const regionColor = colors[quantile(answersPercentage)];
+    const regionColor = colors[quantile(TARGET_PERCENT)];
     region.style("fill", () => regionColor).style("stroke-width", "0.5");
 
     region.on("mouseover", function(d) {
       region.style("stroke", REGION_HOVER_COLOR);
       tooltip.style("display", "block");
       tooltip.select("#tooltip-region").text(REGION);
-      tooltip.select("#tooltip-score").text(answersPercentage);
+      tooltip.select("#tooltip-score").text(TOTAL);
       tooltip.select("#tooltip-ill").text(ILL);
       tooltip.select("#tooltip-well").text(WELL);
       tooltip.select("#tooltip-recovered").text(RECOVERED);
