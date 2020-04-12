@@ -7,7 +7,7 @@
   "knowmore": "En savoir plus",
   "modal.intro.title": "Je me signale",
   "modal.intro.understand": "J'ai compris",
-  "modal.intro.content": "Vous vous apprêtez à remplir un formulaire destiné à collecter anonymement des renseignements sur votre état de santé actuel dans le cadre d'une campagne d'information collaborative sur l'évolution de la pandémie COVID-19.",
+  "modal.intro.content": "Vous vous apprêtez à remplir un formulaire destiné à collecter anonymement des renseignements sur votre état de santé actuel dans le cadre d'une campagne d'information collaborative sur l'évolution de la pandémie COVID-19. Aucune donnée personnelle ou identifiante n'est collectée. En cliquant sur le bouton suivant, vous acceptez de partager vos données anonymisées.",
   "modal.title.success": "Merci pour votre participation !",
   "modal.content.success": "Pour continuer de nous aider, vous pouvez :",
   "modal.content.success.list.0": "faire remplir ce questionnaire aux personnes confinées avec vous",
