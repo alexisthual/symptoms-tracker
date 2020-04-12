@@ -27,7 +27,7 @@ function addTooltip(svg) {
 
   tooltip
     .append("polyline") // The rectangle containing the text, it is 210px width and 60 height
-    .attr("points", "0,0 210,0 210,60 0,60 0,0")
+    .attr("points", "0,0 210,0 210,150 0,150 0,0")
     .style("fill", "#222b1d")
     .style("stroke", "black")
     .style("opacity", "0.9")
@@ -35,7 +35,7 @@ function addTooltip(svg) {
     .style("padding", "1em");
 
   tooltip
-    .append("line") // A line inserted between country name and score
+    .append("line") // A line inserted between region name and score
     .attr("x1", 40)
     .attr("y1", 25)
     .attr("x2", 160)
@@ -51,10 +51,10 @@ function addTooltip(svg) {
     .attr("transform", "translate(0, 20)");
 
   text
-    .append("tspan") // Country name udpated by its id
+    .append("tspan") // Region name udpated by its id
     .attr("x", 105) // ie, tooltip width / 2
     .attr("y", 0)
-    .attr("id", "tooltip-country")
+    .attr("id", "tooltip-region")
     .attr("text-anchor", "middle")
     .style("font-weight", "600")
     .style("font-size", "16px");
@@ -65,7 +65,7 @@ function addTooltip(svg) {
     .attr("y", 30)
     .attr("text-anchor", "middle")
     .style("fill", "929292")
-    .text("Total : ");
+    .text("Réponses : ");
 
   text
     .append("tspan") // Score udpated by its id
@@ -73,17 +73,54 @@ function addTooltip(svg) {
     .style("fill", "#c1d3b8")
     .style("font-weight", "bold");
 
+  text
+    .append("tspan") // Fixed text
+    .attr("x", 105) // ie, tooltip width / 2
+    .attr("y", 60)
+    .attr("text-anchor", "middle")
+    .style("fill", "929292")
+    .text("Malades :");
+
+  text
+    .append("tspan") // Score udpated by its id
+    .attr("id", "tooltip-ill")
+    .style("fill", "#c1d3b8")
+    .style("font-weight", "bold");
+
+  text
+    .append("tspan") // Fixed text
+    .attr("x", 105) // ie, tooltip width / 2
+    .attr("y", 90)
+    .attr("text-anchor", "middle")
+    .style("fill", "929292")
+    .text("Soignés :");
+
+  text
+    .append("tspan") // Score udpated by its id
+    .attr("id", "tooltip-recovered")
+    .style("fill", "#c1d3b8")
+    .style("font-weight", "bold");
+
+  text
+    .append("tspan") // Fixed text
+    .attr("x", 105) // ie, tooltip width / 2
+    .attr("y", 120)
+    .attr("text-anchor", "middle")
+    .style("fill", "929292")
+    .text("Bien portant :");
+
+  text
+    .append("tspan") // Score udpated by its id
+    .attr("id", "tooltip-well")
+    .style("fill", "#c1d3b8")
+    .style("font-weight", "bold");
+
   return tooltip;
 }
 
-// TODO: To use on the legend + tooltip?
-const getPopulationPercentage = (answer, population) => {
-  return ((Number(answer) / Number(population)) * 1) / 6000;
-};
-
 export const createChart = async ({ id, geojson, csv }) => {
   const width = document.getElementById(id).offsetWidth * 0.95;
-  const height = 550;
+  const height = 400;
 
   const path = geoPath();
 
@@ -113,26 +150,26 @@ export const createChart = async ({ id, geojson, csv }) => {
     .attr("d", path);
 
   var quantile = scaleQuantile()
-    .domain([0, max(csv, e => e.TOTAL)])
+    .domain([0, 100])
     .range(range(colors.length));
 
   // Create the legend
-  var legend = svg.append("g").attr("transform", "translate(550, 100)");
+  var legend = svg.append("g").attr("transform", "translate(550, 25)");
 
   legend
     .selectAll()
     .data(range(colors.length))
     .enter()
     .append("svg:rect")
-    .attr("height", LEGEND_SIZE + "px")
-    .attr("width", LEGEND_SIZE + "px")
+    .attr("height", `${LEGEND_SIZE}px`)
+    .attr("width", `${LEGEND_SIZE}px`)
     .attr("x", 5)
     .attr("y", d => d * LEGEND_SIZE)
     .style("fill", d => colors[d]);
 
-  // Create the legend scale
-  const minLegend = min(csv, e => e.TOTAL);
-  const maxLegend = max(csv, e => e.TOTAL);
+  // Create the legend scale (from 0% to 100%)
+  const minLegend = min(csv, () => 0);
+  const maxLegend = max(csv, () => 100);
   var legendScale = scaleLinear()
     .domain([minLegend, maxLegend])
     .range([0, colors.length * LEGEND_SIZE]);
@@ -144,21 +181,22 @@ export const createChart = async ({ id, geojson, csv }) => {
 
   const tooltip = addTooltip(svg);
 
+  //
   csv.forEach(function(e, i) {
-    const { INSEE, TOTAL, REGION } = e;
+    const { INSEE, TOTAL, REGION, ILL, WELL, RECOVERED } = e;
     const region = select(`#code-${INSEE}`);
     const answersPercentage = TOTAL;
     const regionColor = colors[quantile(answersPercentage)];
-    region
-      .style("fill", () => regionColor)
-      .style("stroke-width", "0.5")
-      .attr("class", () => "q" + quantile(answersPercentage) + "-9");
+    region.style("fill", () => regionColor).style("stroke-width", "0.5");
 
     region.on("mouseover", function(d) {
       region.style("stroke", REGION_HOVER_COLOR);
       tooltip.style("display", "block");
-      tooltip.select("#tooltip-country").text(REGION);
+      tooltip.select("#tooltip-region").text(REGION);
       tooltip.select("#tooltip-score").text(answersPercentage);
+      tooltip.select("#tooltip-ill").text(ILL);
+      tooltip.select("#tooltip-well").text(WELL);
+      tooltip.select("#tooltip-recovered").text(RECOVERED);
     });
 
     region.on("mouseout", function() {
@@ -170,12 +208,8 @@ export const createChart = async ({ id, geojson, csv }) => {
 
     region.on("mousemove", function() {
       var [x, y] = mouse(this);
-      tooltip.attr("transform", "translate(" + x + "," + (y - 75) + ")");
+      tooltip.attr("transform", "translate(" + (x + 20) + "," + (y - 75) + ")");
     });
-  });
-
-  select("select").on("change", function() {
-    selectAll("svg").attr("class", this.value);
   });
 
   return Promise.resolve();
