@@ -1,7 +1,7 @@
 {
   "title": "Corona Status",
   "disclaimer": "Ce site est une initiative personnelle et ne livre pas d'avis médical. Ce questionnaire vise à faciliter le suivi du développement des cas réels du COVID-19 au sein des populations confinées. Aucune donnée personnelle ou identifiante n'est collectée.",
-  "support": "Aidez-nous à estimer et prédire la propagation du COVID-19 en France en remplissant ce questionnaire. <b>Votre réponse est utile même si vous n'êtes pas malade</b>.",
+  "support": "Aidez-nous à estimer et prédire la propagation du COVID-19 en France en remplissant ce questionnaire. <b>Votre réponse est utile que soyez bien portant(.e), souffrant(.e) ou rétabli(.e) </b>.",
   "takesurvey": "Je me signale",
   "usage": "Aucune donnée personnelle ou identifiante n'est collectée. L'ensemble des résultats est publiquement accessible.",
   "knowmore": "En savoir plus",
@@ -133,5 +133,7 @@
   "share.title": "Partager sur les réseaux sociaux ",
   "share.url": "https://coronastatus.fr",
   "share.quote": "Aidez-nous à estimer et prédire la propagation du COVID-19 en France en remplissant ce questionnaire.",
-  "home.total.submission": "Nombre total de submissions :"
+  "home.total.submission": "Nombre total de réponses :",
+  "home.support.title": "Collecte de données participative",
+  "home.map.title": "Répartition des réponses"
 }

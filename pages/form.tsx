@@ -92,7 +92,7 @@ const SubmitButton = ({
   ) : (
     <button
       type="submit"
-      className="btn btn-primary btn-lg"
+      className="btn btn-primary btn-lg p-centered"
       disabled={disabled}
     >
       <FormattedMessage id="send" />

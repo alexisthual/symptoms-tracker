@@ -31,38 +31,28 @@ const IndexPage = ({ language }: any) => {
 
       <Header language={language} />
 
+      <div className="empty">
+        <p className="empty-title h5">
+          <FormattedMessage id="home.support.title" />{" "}
+        </p>
+        <p className="empty-subtitle">
+          <FormattedMessage
+            id="support"
+            values={{
+              b: (...chunks: any) => <b>{chunks}</b>
+            }}
+          />
+        </p>
+        <div className="empty-action">
+          <button className="btn btn-primary">
+            <FormattedMessage id="takesurvey" />
+          </button>
+        </div>
+      </div>
+
       <Map />
 
       <div className="container grid-xs text-justify">
-        {/*<p>*/}
-        {/*  <FormattedMessage*/}
-        {/*    id="support"*/}
-        {/*    values={{*/}
-        {/*      b: (...chunks: any) => <b>{chunks}</b>,*/}
-        {/*    }}*/}
-        {/*  />*/}
-        {/*</p>*/}
-
-        <p>
-          <Link href="/form">
-            <button className="btn btn-primary btn-lg p-centered">
-              <i className="icon icon-arrow-right"></i>{" "}
-              <FormattedMessage id="takesurvey" />
-            </button>
-          </Link>
-        </p>
-
-        {/*<p>*/}
-        {/*  <FormattedMessage id="usage" />*/}
-        {/*</p>*/}
-
-        {/*<p>*/}
-        {/*  <Link href="/about">*/}
-        {/*    <button className="btn p-centered">*/}
-        {/*      <i className="icon icon-arrow-right"></i> <FormattedMessage id="knowmore" />*/}
-        {/*    </button>*/}
-        {/*  </Link>*/}
-        {/*</p>*/}
         <Footer />
         <Share messages={messages}></Share>
       </div>

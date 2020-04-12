@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { FormattedMessage } from "react-intl";
+import Head from "next/dist/next-server/lib/head";
 
 interface IHeaderProps {
   language?: string;
@@ -31,11 +32,10 @@ const Header = ({}: IHeaderProps) => (
       <section className="navbar-section"></section>
       <section className="navbar-center">
         <Link href="/">
-          <button className="btn btn-link">
-            <h4>
-              <FormattedMessage id="title" />
-            </h4>
-          </button>
+          <div className="inline-flex flex-centered">
+            <img src="coronastatus_logo.png" height="100" />
+            <img src="coronastatus_logo_text_dark.png" height="100" />
+          </div>
         </Link>
       </section>
       <section className="navbar-section px-2"></section>
