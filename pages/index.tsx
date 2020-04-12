@@ -44,9 +44,12 @@ const IndexPage = ({ language }: any) => {
           />
         </p>
         <div className="empty-action">
-          <button className="btn btn-primary">
-            <FormattedMessage id="takesurvey" />
-          </button>
+          <Link href="/form">
+            <button className="btn btn-primary btn-lg p-centered">
+              <i className="icon icon-arrow-right"></i>{" "}
+              <FormattedMessage id="takesurvey" />
+            </button>
+          </Link>
         </div>
       </div>
 
