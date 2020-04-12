@@ -145,8 +145,8 @@ export const createChart = async ({ id, geojson, csv }) => {
   const tooltip = addTooltip(svg);
 
   csv.forEach(function(e, i) {
-    const { CODE, TOTAL, REGION } = e;
-    const region = select(`#code-${CODE}`);
+    const { INSEE, TOTAL, REGION } = e;
+    const region = select(`#code-${INSEE}`);
     const answersPercentage = TOTAL;
     const regionColor = colors[quantile(answersPercentage)];
     region
