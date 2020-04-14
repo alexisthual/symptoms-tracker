@@ -2,7 +2,7 @@ import { IncomingMessage } from "http";
 import fetch from "isomorphic-unfetch";
 import { NextPageContext } from "next";
 import Head from "next/head";
-import { useState, useEffect, default as React } from "react";
+import { useState, useEffect } from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 import useSWR from "swr";
 
