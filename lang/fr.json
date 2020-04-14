@@ -94,6 +94,7 @@
   "immunoSuppressor": "Vous prenez un traitement immuno-suppresseur",
   "confinedWith.question": "Combien de personnes en plus de vous sont présentes sur votre lieu de confinement ?",
   "confinedWith.placeholder": "Personnes confinées",
+  "confinedWith.hint": "N'hésitez pas à remplir ce questionnaire pour les personnes confinées avec vous !",
   "captcha.question": "Recopiez le texte ci-dessous",
   "captcha.placeholder": "Exemple : 8r5T",
   "captcha.error": "L'image n'a pu être chargée.",

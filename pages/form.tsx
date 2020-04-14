@@ -2,7 +2,7 @@ import { IncomingMessage } from "http";
 import fetch from "isomorphic-unfetch";
 import { NextPageContext } from "next";
 import Head from "next/head";
-import { useState, useEffect } from "react";
+import { useState, useEffect, default as React } from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 import useSWR from "swr";
 
@@ -426,6 +426,15 @@ const FormPage = () => {
               optional={false}
               messages={messages}
             />
+            {confinedWith === undefined ||
+            confinedWith === undefined ||
+            confinedWith === "" ||
+            confinedWith === null ||
+            parseFloat(confinedWith) <= 0 ? null : (
+              <p className="form-input-hint">
+                <FormattedMessage id="confinedWith.hint" />
+              </p>
+            )}
 
             <div className="timeline-item">
               <FormIcon condition={health !== undefined} optional={false} />
