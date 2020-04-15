@@ -426,6 +426,15 @@ const FormPage = () => {
               optional={false}
               messages={messages}
             />
+            {confinedWith === undefined ||
+            confinedWith === undefined ||
+            confinedWith === "" ||
+            confinedWith === null ||
+            parseFloat(confinedWith) <= 0 ? null : (
+              <p className="form-input-hint">
+                <FormattedMessage id="confinedWith.hint" />
+              </p>
+            )}
 
             <div className="timeline-item">
               <FormIcon condition={health !== undefined} optional={false} />
