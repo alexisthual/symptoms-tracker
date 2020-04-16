@@ -50,6 +50,37 @@ const IndexPage = ({ language }: any) => {
         </p>
 
         <p>
+          10000 réponses sont nécessaires par jour pour pouvoir publier le jeu
+          de données. Il nous faut encore X réponses pour atteindre l'objectif
+          d'aujourd'hui.
+        </p>
+
+        <div
+          className="columns py-2"
+          style={{ alignItems: "center", marginBottom: "20px" }}
+        >
+          <div className="column col-3">Progression :</div>
+          <div className="column col-9">
+            <div className="bar bg-secondary">
+              <div
+                className="bar-item tooltip"
+                data-tooltip="25%"
+                style={{ width: "25%" }}
+              >
+                25%
+              </div>
+              <div
+                className="bar-item bg-secondary tooltip"
+                data-tooltip="75%"
+                style={{ width: "75%" }}
+              >
+                75%
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p>
           <FormattedMessage id="usage" />
         </p>
 
