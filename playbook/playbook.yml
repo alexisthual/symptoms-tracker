@@ -1,0 +1,50 @@
+- name: Configure nginx and cron for symptoms-tracker
+  hosts: symptoms_tracker
+
+  roles:
+    # Install nginx
+    - role: geerlingguy.nginx
+
+  tasks:
+    - name: Data folder
+      file:
+        path: /srv/data
+        state: directory
+        mode: "0755"
+
+    - name: Mock data file
+      copy:
+        src: ./progress.json
+        dest: /srv/data/progress.json
+
+    - name: No default website for nginx
+      file:
+        path: /etc/nginx/sites-enabled/default
+        state: absent
+
+    - name: Copy nginx config
+      copy:
+        src: nginx.conf
+        dest: /etc/nginx/sites-enabled/symptoms_tracker
+
+    - name: Restart nginx
+      service:
+        name: nginx
+        state: restarted
+
+    - name: Copy prod env file
+      copy:
+        src: ../.env.prod
+        dest: /srv/.env.prod
+
+    - name: Copy metrics script
+      copy:
+        src: ./script.py
+        dest: /srv/script.py
+
+    - name: Add cron job
+      cron:
+        name: "compute symptoms-tracker progress metrics"
+        minute: "20"
+        job: "python3 /srv/script.py"
+        state: present

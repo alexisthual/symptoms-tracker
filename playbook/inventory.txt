@@ -1,0 +1,1 @@
+symptoms_tracker ansible_host=51.158.108.245 ansible_user=root
