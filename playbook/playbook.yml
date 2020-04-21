@@ -1,6 +1,9 @@
 - name: Configure nginx and cron for symptoms-tracker
   hosts: symptoms_tracker
 
+  vars:
+    python_version: 3.7.3
+
   roles:
     # Install nginx
     - role: geerlingguy.nginx
@@ -41,6 +44,64 @@
       copy:
         src: ./script.py
         dest: /srv/script.py
+
+    - name: Install dependencies required to setup a new version of Python
+      become: yes
+      apt: pkg={{ item }} state=latest
+      tags: [packages]
+      with_items:
+        - build-essential
+        - libsqlite3-dev
+        - sqlite3 # for the command line client
+        - libxml2-dev
+        - bzip2
+        - libbz2-dev
+        - libssl-dev
+        - redis-server
+        - libpq-dev
+        - python-dev
+
+    - name: Ensure ansible-cache directory exists
+      shell: mkdir /var/local/ansible-cache creates=/var/local/ansible-cache
+      become: yes
+
+    # Install Python
+    - name: Download Python {{ python_version }}
+      get_url: dest=/var/local/ansible-cache url=https://www.python.org/ftp/python/{{ python_version }}/Python-{{ python_version }}.tar.xz
+      become: yes
+
+    - name: Ensure Python {{ python_version }} is extracted
+      shell: chdir=/var/local/ansible-cache tar xJf ./Python-{{ python_version }}.tar.xz -C /opt creates=/opt/Python-{{ python_version }}
+      become: yes
+
+    - name: Ensure Python {{ python_version }}is configured
+      shell: chdir=/opt/Python-{{ python_version }} ./configure --prefix=/opt/python{{ python_version }}
+
+    - name: "Ensure Python {{ python_version }} make'd"
+      shell: chdir=/opt/Python-{{ python_version }} make
+
+    - name: Ensure Python {{ python_version }} installed
+      shell: chdir=/opt/Python-{{ python_version }} make install  # Need to add a 'creates=' flag here
+      become: yes
+
+    # Install required packages for data science
+    - name: Install required packages for data science
+      become: yes
+      apt: pkg={{ item }} state=latest
+      with_items:
+        - python-scipy
+        - libblas-dev
+        - liblapack-dev
+        - gfortran
+        - libffi-dev
+        - pkg-config
+        - libfreetype6-dev
+
+    - name: Install python packages
+      pip: name={{ item }}
+      with_items:
+        - numpy
+        - pandas
 
     - name: Add cron job
       cron:
