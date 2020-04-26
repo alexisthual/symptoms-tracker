@@ -1,4 +1,7 @@
-$primary-color: #2965cc;
+$modal-h5-color: #ff5200;
+$btn-color: #fe6c27;
+$btn-color-hover: #ff5200;
+$primary-color: #0d7aea;
 
 @import "node_modules/spectre.css/src/spectre";
 @import "node_modules/spectre.css/src/spectre-exp";
@@ -44,4 +47,26 @@ $primary-color: #2965cc;
   .toast:not(:last-child) {
     margin-bottom: 4px;
   }
+}
+
+.btn.btn-primary {
+  background-color: $btn-color;
+  border-color: $btn-color;
+}
+.btn.btn-primary:hover {
+  background-color: $btn-color-hover;
+  border-color: $btn-color;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Avenir Next";
+}
+
+.h5 {
+  color: $modal-h5-color;
 }
