@@ -31,7 +31,7 @@
     "sqlite3": "^4.1.1",
     "svg-captcha": "^1.4.0",
     "swr": "^0.2.0",
-    "typeorm": "^0.2.24"
+    "typeorm": "^0.2.25"
   },
   "license": "MIT",
   "devDependencies": {
